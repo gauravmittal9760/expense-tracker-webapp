@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+
+Cyber Admin Gateway
+
+</title>
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+/>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet"
+/>
+
+<style>
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    overflow:hidden;
+
+    font-family:"Poppins",sans-serif;
+
+    background:#020617;
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+/* =========================
+ANIMATED GRID BACKGROUND
+========================= */
+
+.grid{
+
+    position:absolute;
+
+    width:200%;
+
+    height:200%;
+
+    background-image:
+    linear-gradient(
+        rgba(0,255,255,0.08) 1px,
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg,
+        rgba(0,255,255,0.08) 1px,
+        transparent 1px
+    );
+
+    background-size:70px 70px;
+
+    transform:
+    rotateX(75deg)
+    translateY(-35%);
+
+    animation:
+    gridMove 15s linear infinite;
+
+    opacity:0.25;
+}
+
+@keyframes gridMove{
+
+    0%{
+
+        transform:
+        rotateX(75deg)
+        translateY(-35%)
+        translateX(0);
+    }
+
+    100%{
+
+        transform:
+        rotateX(75deg)
+        translateY(-35%)
+        translateX(-70px);
+    }
+}
+
+/* =========================
+FLOATING LIGHTS
+========================= */
+
+.light{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(110px);
+
+    opacity:0.55;
+}
+
+.light1{
+
+    width:400px;
+
+    height:400px;
+
+    background:#00e5ff;
+
+    top:-120px;
+
+    left:-100px;
+
+    animation:
+    move1 8s ease-in-out infinite;
+}
+
+.light2{
+
+    width:350px;
+
+    height:350px;
+
+    background:#7c3aed;
+
+    right:-100px;
+
+    bottom:-100px;
+
+    animation:
+    move2 9s ease-in-out infinite;
+}
+
+.light3{
+
+    width:280px;
+
+    height:280px;
+
+    background:#00ff95;
+
+    top:50%;
+
+    left:60%;
+
+    animation:
+    move3 10s ease-in-out infinite;
+}
+
+@keyframes move1{
+
+    50%{
+
+        transform:
+        translateY(40px)
+        translateX(30px);
+    }
+}
+
+@keyframes move2{
+
+    50%{
+
+        transform:
+        translateY(-40px)
+        translateX(-30px);
+    }
+}
+
+@keyframes move3{
+
+    50%{
+
+        transform:
+        translateY(-30px)
+        translateX(20px);
+    }
+}
+
+/* =========================
+MAIN CONTAINER
+========================= */
+
+.main-box{
+
+    width:95%;
+
+    max-width:620px;
+
+    padding:50px 45px;
+
+    border-radius:40px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(24px);
+
+    box-shadow:
+    0 0 60px rgba(0,255,255,0.08);
+
+    z-index:5;
+}
+
+.main-box::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:40px;
+
+    padding:1.3px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,255,255,0.8),
+        rgba(0,255,149,0.3),
+        rgba(124,58,237,0.8)
+    );
+
+    -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite:xor;
+
+    mask-composite:exclude;
+}
+
+/* =========================
+TOP ICON
+========================= */
+
+.logo-wrap{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:28px;
+}
+
+.logo{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:35px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95,
+        #7c3aed
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:58px;
+
+    color:white;
+
+    position:relative;
+
+    animation:
+    pulse 3s infinite;
+}
+
+.logo::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-8px;
+
+    border-radius:40px;
+
+    border:
+    2px solid rgba(255,255,255,0.18);
+
+    animation:
+    rotate 8s linear infinite;
+}
+
+@keyframes rotate{
+
+    from{
+
+        transform:rotate(0deg);
+    }
+
+    to{
+
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes pulse{
+
+    50%{
+
+        transform:scale(1.05);
+
+        box-shadow:
+        0 0 45px rgba(0,255,255,0.45);
+    }
+}
+
+/* =========================
+TEXT
+========================= */
+
+.heading{
+
+    text-align:center;
+
+    margin-bottom:10px;
+}
+
+.heading h1{
+
+    font-family:"Orbitron",sans-serif;
+
+    font-size:54px;
+
+    font-weight:900;
+
+    line-height:1.1;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00e5ff,
+        #00ff95,
+        #7c3aed
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.subtext{
+
+    text-align:center;
+
+    color:#b6c6dd;
+
+    font-size:16px;
+
+    margin-bottom:38px;
+
+    line-height:1.7;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.btn-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:22px;
+}
+
+.option-btn{
+
+    position:relative;
+
+    width:100%;
+
+    height:78px;
+
+    border:none;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    font-size:21px;
+
+    font-weight:700;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    transition:0.35s;
+
+    letter-spacing:0.4px;
+}
+
+.option-btn i{
+
+    font-size:25px;
+}
+
+.option-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:150%;
+
+    height:100%;
+
+    background:
+    linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.28),
+        transparent
+    );
+
+    top:0;
+
+    left:-150%;
+
+    transition:0.7s;
+}
+
+.option-btn:hover::before{
+
+    left:150%;
+}
+
+.option-btn:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.02);
+}
+
+/* =========================
+BUTTON STYLES
+========================= */
+
+.admin-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #00c3ff,
+        #0066ff
+    );
+
+    box-shadow:
+    0 0 30px rgba(0,195,255,0.35);
+}
+
+.user-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #00ff95,
+        #00b36b
+    );
+
+    box-shadow:
+    0 0 30px rgba(0,255,149,0.28);
+}
+
+.forgot-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff1744,
+        #ff4d6d
+    );
+
+    box-shadow:
+    0 0 30px rgba(255,23,68,0.32);
+}
+
+/* =========================
+BOTTOM SECURITY TAG
+========================= */
+
+.security{
+
+    margin-top:32px;
+
+    text-align:center;
+
+    color:#8ca4c8;
+
+    font-size:14px;
+
+    line-height:1.8;
+}
+
+.security span{
+
+    color:#00ffd5;
+
+    font-weight:600;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    .main-box{
+
+        padding:35px 22px;
+    }
+
+    .heading h1{
+
+        font-size:38px;
+    }
+
+    .option-btn{
+
+        font-size:17px;
+
+        height:68px;
+    }
+
+    .logo{
+
+        width:105px;
+
+        height:105px;
+
+        font-size:46px;
+    }
+
+    .subtext{
+
+        font-size:14px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- GRID -->
+
+<div class="grid"></div>
+
+<!-- LIGHTS -->
+
+<div class="light light1"></div>
+
+<div class="light light2"></div>
+
+<div class="light light3"></div>
+
+<!-- MAIN -->
+
+<div class="main-box">
+
+<div class="logo-wrap">
+
+<div class="logo">
+
+<i class="fa-solid fa-user-secret"></i>
+
+</div>
+
+</div>
+
+<div class="heading">
+
+<h1>
+
+ADMIN ACCESS
+
+</h1>
+
+</div>
+
+<div class="subtext">
+
+Ultra Secure Administrative Gateway Detected.<br>
+
+Choose how you want to continue.
+
+</div>
+
+<div class="btn-group">
+
+<button
+class="option-btn admin-btn"
+
+onclick="
+window.location.href=
+'/open_admin_panel'
+"
+>
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Login To Admin Panel
+
+</button>
+
+<button
+class="option-btn user-btn"
+
+onclick="
+window.location.href=
+'/continue_as_user'
+"
+>
+
+<i class="fa-solid fa-user"></i>
+
+Continue As Normal User
+
+</button>
+
+<button
+class="option-btn forgot-btn"
+
+onclick="
+window.location.href=
+'/forgot_admin_password'
+"
+>
+
+<i class="fa-solid fa-key"></i>
+
+Forgot Admin Password
+
+</button>
+
+</div>
+
+<div class="security">
+
+<span>⚡ Cyber Protected</span> •
+<span>Encrypted Access</span> •
+<span>Expense Tracker OS</span>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

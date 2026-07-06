@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        AI Expense Insights
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        body {
+
+            background:
+                radial-gradient(circle at top left, #111827 0%, #0f172a 45%, #020617 100%);
+
+            min-height: 100vh;
+
+            color: white;
+
+            overflow-x: hidden;
+
+        }
+
+        .page-wrapper {
+
+            padding: 50px 15px;
+
+        }
+
+        .hero-section {
+
+            text-align: center;
+
+            margin-bottom: 50px;
+
+        }
+
+        .hero-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 10px 20px;
+
+            border-radius: 50px;
+
+            background: rgba(59,130,246,0.12);
+
+            border: 1px solid rgba(59,130,246,0.25);
+
+            color: #93c5fd;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .hero-title {
+
+            font-size: 50px;
+
+            font-weight: 800;
+
+            background: linear-gradient(
+                90deg,
+                #60a5fa,
+                #38bdf8,
+                #818cf8
+            );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 12px;
+
+        }
+
+        .hero-subtitle {
+
+            color: #cbd5e1;
+
+            font-size: 17px;
+
+        }
+
+        .stats-card {
+
+            border-radius: 28px;
+
+            padding: 35px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(16px);
+
+            transition: 0.35s ease;
+
+            height: 100%;
+
+        }
+
+        .stats-card:hover {
+
+            transform: translateY(-6px);
+
+        }
+
+        .stats-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            top: -70px;
+
+            right: -70px;
+
+            background: rgba(255,255,255,0.08);
+
+        }
+
+        .stats-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+            margin-bottom: 25px;
+
+            background: rgba(255,255,255,0.12);
+
+        }
+
+        .stats-label {
+
+            color: rgba(255,255,255,0.8);
+
+            font-size: 15px;
+
+            margin-bottom: 8px;
+
+        }
+
+        .stats-value {
+
+            font-size: 40px;
+
+            font-weight: 800;
+
+        }
+
+        .stats-extra {
+
+            margin-top: 12px;
+
+            font-size: 15px;
+
+            color: rgba(255,255,255,0.8);
+
+        }
+
+        .primary-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37,99,235,0.95),
+                    rgba(29,78,216,0.92)
+                );
+
+        }
+
+        .danger-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(220,38,38,0.95),
+                    rgba(153,27,27,0.92)
+                );
+
+        }
+
+        .glass-card {
+
+            background: rgba(30,41,59,0.82);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 28px;
+
+            padding: 35px;
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 0 35px rgba(0,0,0,0.35);
+
+            transition: 0.3s ease;
+
+        }
+
+        .glass-card:hover {
+
+            transform: translateY(-4px);
+
+        }
+
+        .section-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            margin-bottom: 25px;
+
+        }
+
+        .section-icon {
+
+            width: 55px;
+
+            height: 55px;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 24px;
+
+        }
+
+        .insight-icon {
+
+            background: rgba(59,130,246,0.15);
+
+            color: #60a5fa;
+
+        }
+
+        .advice-icon {
+
+            background: rgba(34,197,94,0.15);
+
+            color: #4ade80;
+
+        }
+
+        .insight-text {
+
+            font-size: 18px;
+
+            line-height: 1.9;
+
+            color: #e2e8f0;
+
+        }
+
+        .advice-box {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(22,163,74,0.12),
+                    rgba(34,197,94,0.08)
+                );
+
+            border: 1px solid rgba(34,197,94,0.2);
+
+        }
+
+        .back-btn {
+
+            margin-top: 35px;
+
+            height: 56px;
+
+            border-radius: 16px;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            transition: 0.3s ease;
+
+        }
+
+        .back-btn:hover {
+
+            transform: translateY(-3px);
+
+        }
+
+        .floating-blur {
+
+            position: fixed;
+
+            width: 320px;
+
+            height: 320px;
+
+            border-radius: 50%;
+
+            filter: blur(110px);
+
+            opacity: 0.15;
+
+            z-index: -1;
+
+        }
+
+        .blur-one {
+
+            background: #3b82f6;
+
+            top: -100px;
+
+            left: -80px;
+
+        }
+
+        .blur-two {
+
+            background: #22c55e;
+
+            bottom: -100px;
+
+            right: -80px;
+
+        }
+
+        @media(max-width: 768px) {
+
+            .hero-title {
+
+                font-size: 36px;
+
+            }
+
+            .stats-value {
+
+                font-size: 30px;
+
+            }
+
+            .glass-card {
+
+                padding: 25px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="floating-blur blur-one"></div>
+
+<div class="floating-blur blur-two"></div>
+
+<div class="container page-wrapper">
+
+    <!-- HERO -->
+
+    <div class="hero-section">
+
+        <div class="hero-badge">
+
+            <i class="fa-solid fa-robot"></i>
+
+            AI Powered Expense Intelligence
+
+        </div>
+
+        <h1 class="hero-title">
+
+            AI Expense Insights
+
+        </h1>
+
+        <p class="hero-subtitle">
+
+            Smart analysis of your spending habits, financial patterns,
+            and saving opportunities.
+
+        </p>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-lg-6">
+
+            <div class="stats-card primary-card">
+
+                <div class="stats-icon">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                </div>
+
+                <div class="stats-label">
+
+                    Total Expenses
+
+                </div>
+
+                <div class="stats-value">
+
+                    ₹{{ total_expense }}
+
+                </div>
+
+                <div class="stats-extra">
+
+                    Overall amount spent across all categories.
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="stats-card danger-card">
+
+                <div class="stats-icon">
+
+                    <i class="fa-solid fa-chart-pie"></i>
+
+                </div>
+
+                <div class="stats-label">
+
+                    Highest Spending Category
+
+                </div>
+
+                <div class="stats-value">
+
+                    {{ highest_category }}
+
+                </div>
+
+                <div class="stats-extra">
+
+                    ₹{{ highest_amount }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- AI INSIGHT -->
+
+    <div class="glass-card mb-4">
+
+        <div class="section-title">
+
+            <div class="section-icon insight-icon">
+
+                <i class="fa-solid fa-brain"></i>
+
+            </div>
+
+            AI Insight
+
+        </div>
+
+        <div class="insight-text">
+
+            {{ insight }}
+
+        </div>
+
+    </div>
+
+    <!-- SAVINGS ADVICE -->
+
+    <div class="glass-card advice-box">
+
+        <div class="section-title">
+
+            <div class="section-icon advice-icon">
+
+                <i class="fa-solid fa-piggy-bank"></i>
+
+            </div>
+
+            Savings Advice
+
+        </div>
+
+        <div class="insight-text">
+
+            {{ advice }}
+
+        </div>
+
+    </div>
+
+    <!-- BACK BUTTON -->
+
+    <div class="text-center">
+
+        <a
+            href="/analytics_menu"
+            class="btn btn-danger px-5 back-btn"
+        >
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

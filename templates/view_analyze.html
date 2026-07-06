@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        View & Analyze Expenses
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        *{
+
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            min-height:100vh;
+
+            background:
+                radial-gradient(circle at top left,#3b82f622 0%,transparent 30%),
+                radial-gradient(circle at bottom right,#22c55e22 0%,transparent 30%),
+                linear-gradient(135deg,#0f172a,#111827,#1e293b);
+
+            overflow-x:hidden;
+
+            font-family:'Segoe UI',sans-serif;
+
+            color:white;
+
+            position:relative;
+        }
+
+        body::before{
+
+            content:"";
+
+            position:absolute;
+
+            width:420px;
+            height:420px;
+
+            background:rgba(59,130,246,0.08);
+
+            border-radius:50%;
+
+            top:-180px;
+            left:-120px;
+
+            filter:blur(80px);
+        }
+
+        body::after{
+
+            content:"";
+
+            position:absolute;
+
+            width:380px;
+            height:380px;
+
+            background:rgba(34,197,94,0.08);
+
+            border-radius:50%;
+
+            bottom:-170px;
+            right:-110px;
+
+            filter:blur(80px);
+        }
+
+        .main-wrapper{
+
+            position:relative;
+            z-index:2;
+
+            padding:40px 15px;
+        }
+
+        .main-card{
+
+            max-width:850px;
+
+            margin:auto;
+
+            background:rgba(17,24,39,0.78);
+
+            backdrop-filter:blur(18px);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:34px;
+
+            padding:45px 35px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+
+            animation:fadeUp 0.8s ease;
+        }
+
+        @keyframes fadeUp{
+
+            from{
+
+                opacity:0;
+                transform:translateY(40px);
+            }
+
+            to{
+
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .top-icon{
+
+            width:120px;
+            height:120px;
+
+            margin:auto;
+
+            border-radius:35px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            background:
+                linear-gradient(135deg,#3b82f6,#22c55e);
+
+            font-size:3.2rem;
+
+            box-shadow:
+                0 0 40px rgba(59,130,246,0.35);
+
+            margin-bottom:30px;
+
+            animation:floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon{
+
+            0%{
+
+                transform:translateY(0px);
+            }
+
+            50%{
+
+                transform:translateY(-10px);
+            }
+
+            100%{
+
+                transform:translateY(0px);
+            }
+        }
+
+        .main-title{
+
+            text-align:center;
+
+            font-size:2.8rem;
+            font-weight:800;
+
+            margin-bottom:12px;
+
+            background:
+                linear-gradient(90deg,#ffffff,#bfdbfe,#bbf7d0);
+
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .subtitle{
+
+            text-align:center;
+
+            color:#cbd5e1;
+
+            margin-bottom:40px;
+
+            font-size:1rem;
+        }
+
+        .menu-grid{
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+            gap:22px;
+        }
+
+        .menu-btn{
+
+            position:relative;
+
+            overflow:hidden;
+
+            background:rgba(255,255,255,0.04);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:24px;
+
+            padding:24px 20px;
+
+            text-decoration:none;
+
+            color:white;
+
+            transition:0.35s ease;
+
+            min-height:150px;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+        }
+
+        .menu-btn::before{
+
+            content:"";
+
+            position:absolute;
+
+            width:160px;
+            height:160px;
+
+            background:rgba(255,255,255,0.05);
+
+            border-radius:50%;
+
+            top:-60px;
+            right:-60px;
+
+            transition:0.4s ease;
+        }
+
+        .menu-btn:hover{
+
+            transform:translateY(-6px) scale(1.02);
+
+            color:white;
+
+            border-color:rgba(255,255,255,0.15);
+
+            box-shadow:
+                0 16px 40px rgba(0,0,0,0.35);
+        }
+
+        .menu-btn:hover::before{
+
+            transform:scale(1.2);
+        }
+
+        .menu-btn i{
+
+            font-size:2.3rem;
+
+            margin-bottom:18px;
+        }
+
+        .menu-btn h4{
+
+            font-size:1.15rem;
+
+            font-weight:700;
+
+            margin-bottom:8px;
+        }
+
+        .menu-btn p{
+
+            margin:0;
+
+            color:#cbd5e1;
+
+            font-size:0.92rem;
+        }
+
+        .all-expenses{
+
+            background:
+                linear-gradient(135deg,#2563eb,#3b82f6);
+        }
+
+        .category{
+
+            background:
+                linear-gradient(135deg,#14b8a6,#22c55e);
+        }
+
+        .filter{
+
+            background:
+                linear-gradient(135deg,#7c3aed,#9333ea);
+        }
+
+        .sort{
+
+            background:
+                linear-gradient(135deg,#f59e0b,#f97316);
+        }
+
+        .report{
+
+            background:
+                linear-gradient(135deg,#ec4899,#f43f5e);
+        }
+
+        .gallery{
+
+            background:
+                linear-gradient(135deg,#06b6d4,#0ea5e9);
+        }
+
+        .analytics{
+
+            background:
+                linear-gradient(135deg,#eab308,#f59e0b);
+
+            color:#111827 !important;
+        }
+
+        .analytics p{
+
+            color:#1f2937;
+        }
+
+        .exit-btn{
+
+            margin-top:35px;
+
+            width:100%;
+
+            border:none;
+
+            border-radius:22px;
+
+            height:65px;
+
+            font-size:1.08rem;
+            font-weight:700;
+
+            color:white;
+
+            background:
+                linear-gradient(135deg,#ef4444,#dc2626);
+
+            transition:0.35s ease;
+
+            box-shadow:
+                0 12px 28px rgba(239,68,68,0.35);
+        }
+
+        .exit-btn:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:
+                0 18px 35px rgba(239,68,68,0.45);
+        }
+
+        @media(max-width:768px){
+
+            .main-card{
+
+                padding:35px 20px;
+            }
+
+            .main-title{
+
+                font-size:2rem;
+            }
+
+            .top-icon{
+
+                width:95px;
+                height:95px;
+
+                font-size:2.5rem;
+            }
+
+            .menu-btn{
+
+                min-height:135px;
+            }
+        }
+
+         /* FIX AUTOFILL WHITE BACKGROUND ISSUE */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #111827 inset !important;
+        -webkit-text-fill-color: white !important;
+        caret-color: white;
+        transition: background-color 9999s ease-in-out 0s;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="main-wrapper">
+
+    <div class="main-card">
+
+        <!-- TOP ICON -->
+
+        <div class="top-icon">
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+        </div>
+
+        <!-- TITLE -->
+
+        <h1 class="main-title">
+
+            View & Analyze Expenses
+
+        </h1>
+
+        <p class="subtitle">
+
+            Analyze spending patterns, reports, expense memories and insights from your financial activity.
+        </p>
+
+        <!-- MENU GRID -->
+
+        <div class="menu-grid">
+
+            <!-- ALL EXPENSES -->
+
+            <a
+                href="/all_expenses"
+                class="menu-btn all-expenses"
+            >
+
+                <i class="fa-solid fa-wallet"></i>
+
+                <h4>
+                    1. All Expenses
+                </h4>
+
+                <p>
+                    View complete expense history instantly.
+                </p>
+
+            </a>
+
+            <!-- CATEGORY -->
+
+            <a
+                href="/category_spending"
+                class="menu-btn category"
+            >
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <h4>
+                    2. Category Wise Spending
+                </h4>
+
+                <p>
+                    Analyze spending category by category.
+                </p>
+
+            </a>
+
+            <!-- FILTER -->
+
+            <a
+                href="/filter_expenses"
+                class="menu-btn filter"
+            >
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                <h4>
+                    3. Filter Expenses
+                </h4>
+
+                <p>
+                    Find expenses based on selected dates.
+                </p>
+
+            </a>
+
+            <!-- SORT -->
+
+            <a
+                href="/sort_expenses"
+                class="menu-btn sort"
+            >
+
+                <i class="fa-solid fa-arrow-down-wide-short"></i>
+
+                <h4>
+                    4. Sort Expenses
+                </h4>
+
+                <p>
+                    Organize expenses from high to low.
+                </p>
+
+            </a>
+
+            <!-- REPORT -->
+
+            <a
+                href="/monthly_report"
+                class="menu-btn report"
+            >
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                <h4>
+                    5. Monthly Report
+                </h4>
+
+                <p>
+                    Check detailed monthly expense reports.
+                </p>
+
+            </a>
+
+            <!-- GALLERY -->
+
+            <a
+                href="/expense_gallery"
+                class="menu-btn gallery"
+            >
+
+                <i class="fa-solid fa-images"></i>
+
+                <h4>
+                    6. Expense Gallery
+                </h4>
+
+                <p>
+                    Explore your expense memory snapshots.
+                </p>
+
+            </a>
+
+            <!-- ANALYTICS -->
+
+            <a
+                href="/analytics_menu"
+                class="menu-btn analytics"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <h4>
+                    7. Analytics & Insights
+                </h4>
+
+                <p>
+                    Advanced charts, trends and smart insights.
+                </p>
+
+            </a>
+
+        </div>
+
+        <!-- EXIT -->
+
+        <a
+            href="/dashboard"
+            class="btn exit-btn"
+        >
+
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+
+            8. Exit
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

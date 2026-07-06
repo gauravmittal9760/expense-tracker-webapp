@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        All Expenses
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        body {
+
+            background:
+                radial-gradient(circle at top left, #111827 0%, #0f172a 45%, #020617 100%);
+
+            min-height: 100vh;
+
+            color: white;
+
+            overflow-x: hidden;
+
+        }
+
+        .page-wrapper {
+
+            padding: 45px 15px;
+
+        }
+
+        .hero-section {
+
+            text-align: center;
+
+            margin-bottom: 45px;
+
+        }
+
+        .hero-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 10px 22px;
+
+            border-radius: 50px;
+
+            background: rgba(59,130,246,0.12);
+
+            border: 1px solid rgba(59,130,246,0.25);
+
+            color: #93c5fd;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .hero-title {
+
+            font-size: 48px;
+
+            font-weight: 800;
+
+            background: linear-gradient(
+                90deg,
+                #60a5fa,
+                #38bdf8,
+                #818cf8
+            );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 12px;
+
+        }
+
+        .hero-subtitle {
+
+            color: #cbd5e1;
+
+            font-size: 17px;
+
+        }
+
+        .expenses-card {
+
+            background: rgba(30,41,59,0.82);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 28px;
+
+            padding: 30px;
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 0 35px rgba(0,0,0,0.35);
+
+        }
+
+        .table {
+
+            margin-bottom: 0;
+
+            border-collapse: separate;
+
+            border-spacing: 0 14px;
+
+        }
+
+        .table thead th {
+
+            border: none !important;
+
+            color: #93c5fd;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            padding-bottom: 18px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+        }
+
+        .table tbody tr {
+
+            background: rgba(15,23,42,0.88);
+
+            transition: 0.3s ease;
+
+        }
+
+        .table tbody tr:hover {
+
+            transform: scale(1.01);
+
+            background: rgba(30,41,59,1);
+
+        }
+
+        .table tbody td {
+
+            border: none !important;
+
+            vertical-align: middle;
+
+            padding: 18px 16px;
+
+            color: #e2e8f0;
+
+            font-size: 15px;
+
+        }
+
+        .table tbody tr td:first-child {
+
+            border-top-left-radius: 16px;
+
+            border-bottom-left-radius: 16px;
+
+        }
+
+        .table tbody tr td:last-child {
+
+            border-top-right-radius: 16px;
+
+            border-bottom-right-radius: 16px;
+
+        }
+
+        .category-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            background: rgba(59,130,246,0.15);
+
+            color: #93c5fd;
+
+            padding: 8px 16px;
+
+            border-radius: 50px;
+
+            font-weight: 600;
+
+        }
+
+        .amount-box {
+
+            color: #4ade80;
+
+            font-weight: 700;
+
+            font-size: 16px;
+
+        }
+
+        .date-box {
+
+            color: #facc15;
+
+            font-weight: 600;
+
+        }
+
+        .description-box {
+
+            max-width: 350px;
+
+            line-height: 1.6;
+
+            color: #cbd5e1;
+
+        }
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #cbd5e1;
+
+        }
+
+        .empty-state i {
+
+            font-size: 70px;
+
+            color: #475569;
+
+            margin-bottom: 20px;
+
+        }
+
+        .back-btn {
+
+            margin-top: 35px;
+
+            height: 56px;
+
+            border-radius: 16px;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            transition: 0.3s ease;
+
+        }
+
+        .back-btn:hover {
+
+            transform: translateY(-3px);
+
+        }
+
+        .floating-blur {
+
+            position: fixed;
+
+            width: 320px;
+
+            height: 320px;
+
+            border-radius: 50%;
+
+            filter: blur(110px);
+
+            opacity: 0.15;
+
+            z-index: -1;
+
+        }
+
+        .blur-one {
+
+            background: #3b82f6;
+
+            top: -100px;
+
+            left: -80px;
+
+        }
+
+        .blur-two {
+
+            background: #22c55e;
+
+            bottom: -100px;
+
+            right: -80px;
+
+        }
+
+        @media(max-width: 768px) {
+
+            .hero-title {
+
+                font-size: 34px;
+
+            }
+
+            .expenses-card {
+
+                padding: 18px;
+
+            }
+
+            .description-box {
+
+                max-width: 180px;
+
+            }
+
+        }
+
+        /* FIX AUTOFILL WHITE BACKGROUND ISSUE */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #111827 inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="floating-blur blur-one"></div>
+
+<div class="floating-blur blur-two"></div>
+
+<div class="container page-wrapper">
+
+    <!-- HERO -->
+
+    <div class="hero-section">
+
+        <div class="hero-badge">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            Expense Records Dashboard
+
+        </div>
+
+        <h1 class="hero-title">
+
+            All Expenses
+
+        </h1>
+
+        <p class="hero-subtitle">
+
+            View and track all your expenses in one smart dashboard.
+
+        </p>
+
+    </div>
+
+    <!-- EXPENSE TABLE -->
+
+    <div class="expenses-card">
+
+        {% if expenses %}
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for expense in expenses %}
+
+                    <tr>
+
+                        <td>
+
+                            <div class="category-badge">
+
+                                <i class="fa-solid fa-tag"></i>
+
+                                {{ expense.category }}
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="description-box">
+
+                                {% if expense.description %}
+
+                                    {{ expense.description }}
+
+                                {% else %}
+
+                                    <span class="text-secondary">
+
+                                        No Description
+
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="amount-box">
+
+                                ₹{{ expense.amount }}
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="date-box">
+
+                                <i class="fa-regular fa-calendar me-1"></i>
+
+                                {{ expense.date }}
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h3 class="mb-3">
+
+                No Expenses Found
+
+            </h3>
+
+            <p>
+
+                Your expenses will appear here once you add them.
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- BACK BUTTON -->
+
+    <div class="text-center">
+
+        <a
+            href="/view_analyze"
+            class="btn btn-danger px-5 back-btn"
+        >
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

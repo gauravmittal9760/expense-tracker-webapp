@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Signup</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        :root{
+
+            --cyan:#00e5ff;
+            --green:#00ff95;
+            --purple:#8b5cf6;
+            --dark:#020617;
+            --glass:
+            rgba(255,255,255,0.06);
+        }
+
+        body {
+
+            background:
+            radial-gradient(
+                circle at top left,
+                #111827,
+                #020617 55%,
+                #000
+            );
+
+            min-height:100vh;
+
+            color:white;
+
+            overflow-x:hidden;
+
+            position:relative;
+
+            font-family:
+            "Segoe UI",
+            sans-serif;
+        }
+
+        /* ====================================
+           SUPER BACKGROUND
+        ==================================== */
+
+        .animated-grid{
+
+            position:fixed;
+
+            inset:0;
+
+            background-image:
+            linear-gradient(
+                rgba(255,255,255,0.04) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(255,255,255,0.04) 1px,
+                transparent 1px
+            );
+
+            background-size:45px 45px;
+
+            animation:
+            moveGrid 16s linear infinite;
+
+            z-index:-8;
+        }
+
+        @keyframes moveGrid{
+
+            from{
+                transform:
+                translateY(0px);
+            }
+
+            to{
+                transform:
+                translateY(45px);
+            }
+        }
+
+        .noise{
+
+            position:fixed;
+
+            inset:0;
+
+            background-image:
+            radial-gradient(
+                rgba(255,255,255,0.08) 1px,
+                transparent 1px
+            );
+
+            background-size:4px 4px;
+
+            opacity:0.04;
+
+            z-index:-7;
+        }
+
+        /* ====================================
+           AURORA LIGHTS
+        ==================================== */
+
+        .aurora{
+
+            position:absolute;
+
+            border-radius:50%;
+
+            filter:blur(110px);
+
+            opacity:0.38;
+
+            animation:
+            auroraMove 10s ease-in-out infinite;
+        }
+
+        .aurora1{
+
+            width:380px;
+
+            height:380px;
+
+            background:#00e5ff;
+
+            top:-120px;
+
+            left:-120px;
+        }
+
+        .aurora2{
+
+            width:340px;
+
+            height:340px;
+
+            background:#00ff95;
+
+            bottom:-140px;
+
+            right:-100px;
+
+            animation-delay:2s;
+        }
+
+        .aurora3{
+
+            width:240px;
+
+            height:240px;
+
+            background:#8b5cf6;
+
+            top:35%;
+
+            left:55%;
+
+            animation-delay:4s;
+        }
+
+        @keyframes auroraMove{
+
+            0%{
+
+                transform:
+                translateY(0px)
+                scale(1);
+            }
+
+            50%{
+
+                transform:
+                translateY(-35px)
+                scale(1.12);
+            }
+
+            100%{
+
+                transform:
+                translateY(0px)
+                scale(1);
+            }
+        }
+
+        /* ====================================
+           FLOATING PARTICLES
+        ==================================== */
+
+        .particle{
+
+            position:absolute;
+
+            border-radius:50%;
+
+            background:white;
+
+            opacity:0.18;
+
+            animation:
+            floatParticle linear infinite;
+        }
+
+        .p1{
+            width:6px;
+            height:6px;
+            left:8%;
+            animation-duration:13s;
+        }
+
+        .p2{
+            width:10px;
+            height:10px;
+            left:22%;
+            animation-duration:18s;
+        }
+
+        .p3{
+            width:5px;
+            height:5px;
+            left:42%;
+            animation-duration:15s;
+        }
+
+        .p4{
+            width:8px;
+            height:8px;
+            left:68%;
+            animation-duration:21s;
+        }
+
+        .p5{
+            width:7px;
+            height:7px;
+            left:84%;
+            animation-duration:17s;
+        }
+
+        .p6{
+            width:5px;
+            height:5px;
+            left:93%;
+            animation-duration:14s;
+        }
+
+        @keyframes floatParticle{
+
+            from{
+
+                transform:
+                translateY(110vh)
+                scale(0);
+            }
+
+            to{
+
+                transform:
+                translateY(-10vh)
+                scale(1.8);
+            }
+        }
+
+        /* ====================================
+           MAIN WRAPPER
+        ==================================== */
+
+        .main-wrapper{
+
+            min-height:100vh;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            padding:60px 18px;
+
+            position:relative;
+
+            z-index:2;
+        }
+
+        /* ====================================
+           PREMIUM CARD
+        ==================================== */
+
+        .signup-card {
+
+            width:100%;
+
+            max-width:650px;
+
+            background:
+            linear-gradient(
+                145deg,
+                rgba(15,23,42,0.88),
+                rgba(15,23,42,0.74)
+            );
+
+            backdrop-filter:blur(26px);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            border-radius:38px;
+
+            padding:48px;
+
+            position:relative;
+
+            overflow:hidden;
+
+            box-shadow:
+            0 0 80px rgba(0,255,255,0.08),
+            0 25px 60px rgba(0,0,0,0.45);
+
+            animation:
+            cardFloat 6s ease-in-out infinite;
+        }
+
+        .signup-card::before{
+
+            content:"";
+
+            position:absolute;
+
+            width:260px;
+
+            height:260px;
+
+            background:
+            radial-gradient(
+                circle,
+                rgba(0,229,255,0.22),
+                transparent 70%
+            );
+
+            top:-120px;
+
+            right:-90px;
+        }
+
+        .signup-card::after{
+
+            content:"";
+
+            position:absolute;
+
+            width:200px;
+
+            height:200px;
+
+            background:
+            radial-gradient(
+                circle,
+                rgba(0,255,149,0.16),
+                transparent 70%
+            );
+
+            bottom:-80px;
+
+            left:-60px;
+        }
+
+        @keyframes cardFloat{
+
+            0%{
+                transform:
+                translateY(0px);
+            }
+
+            50%{
+                transform:
+                translateY(-10px);
+            }
+
+            100%{
+                transform:
+                translateY(0px);
+            }
+        }
+
+        /* ====================================
+           TOP GLOW LINE
+        ==================================== */
+
+        .top-glow{
+
+            position:absolute;
+
+            top:0;
+
+            left:0;
+
+            width:100%;
+
+            height:4px;
+
+            background:
+            linear-gradient(
+                90deg,
+                transparent,
+                var(--cyan),
+                var(--green),
+                transparent
+            );
+
+            animation:
+            glowMove 5s linear infinite;
+        }
+
+        @keyframes glowMove{
+
+            0%{
+                transform:
+                translateX(-100%);
+            }
+
+            100%{
+                transform:
+                translateX(100%);
+            }
+        }
+
+        /* ====================================
+           LOGO
+        ==================================== */
+
+        .logo-box{
+
+            width:105px;
+
+            height:105px;
+
+            border-radius:30px;
+
+            margin:auto;
+
+            margin-bottom:28px;
+
+            background:
+            linear-gradient(
+                135deg,
+                var(--cyan),
+                var(--green)
+            );
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            font-size:42px;
+
+            color:#04131f;
+
+            position:relative;
+
+            box-shadow:
+            0 0 30px rgba(0,255,255,0.45);
+
+            animation:
+            pulseLogo 3s infinite;
+        }
+
+        .logo-box::before{
+
+            content:"";
+
+            position:absolute;
+
+            inset:-6px;
+
+            border-radius:36px;
+
+            border:
+            2px solid rgba(255,255,255,0.12);
+
+            animation:
+            rotateRing 8s linear infinite;
+        }
+
+        @keyframes rotateRing{
+
+            from{
+                transform:rotate(0deg);
+            }
+
+            to{
+                transform:rotate(360deg);
+            }
+        }
+
+        @keyframes pulseLogo{
+
+            0%{
+                transform:scale(1);
+            }
+
+            50%{
+                transform:scale(1.08);
+            }
+
+            100%{
+                transform:scale(1);
+            }
+        }
+
+        /* ====================================
+           TITLES
+        ==================================== */
+
+        .signup-title {
+
+            font-size:58px;
+
+            font-weight:900;
+
+            letter-spacing:1px;
+
+            text-align:center;
+
+            background:
+            linear-gradient(
+                90deg,
+                #00f7ff,
+                #00ff95,
+                #ffffff
+            );
+
+            -webkit-background-clip:text;
+
+            -webkit-text-fill-color:transparent;
+
+            line-height:1.1;
+        }
+
+        .signup-subtitle {
+
+            color:#c6d0dd;
+
+            font-size:15px;
+
+            text-align:center;
+
+            margin-top:12px;
+
+            margin-bottom:38px;
+
+            line-height:1.8;
+        }
+
+        /* ====================================
+           INPUTS
+        ==================================== */
+
+        .input-group {
+
+            background:
+            rgba(255,255,255,0.05);
+
+            border-radius:20px;
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            overflow:hidden;
+
+            transition:0.35s;
+
+            margin-bottom:22px;
+
+            position:relative;
+        }
+
+        .input-group::before{
+
+            content:"";
+
+            position:absolute;
+
+            left:-120%;
+
+            top:0;
+
+            width:100%;
+
+            height:100%;
+
+            background:
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.12),
+                transparent
+            );
+
+            transition:0.7s;
+        }
+
+        .input-group:hover::before{
+
+            left:120%;
+        }
+
+        .input-group:focus-within {
+
+            border-color:var(--cyan);
+
+            transform:
+            translateY(-3px)
+            scale(1.01);
+
+            box-shadow:
+            0 0 24px rgba(0,229,255,0.18);
+        }
+
+        .input-group-text {
+
+            background:transparent !important;
+
+            border:none !important;
+
+            color:var(--cyan);
+
+            padding-left:20px;
+
+            font-size:18px;
+
+            min-width:60px;
+
+            justify-content:center;
+        }
+
+        .form-control,
+        .form-select {
+
+            background:transparent !important;
+
+            border:none !important;
+
+            color:white !important;
+
+            height:64px;
+
+            font-size:15px;
+
+            box-shadow:none !important;
+        }
+
+        .form-control::placeholder {
+
+            color:#9aa8bb !important;
+        }
+
+        .form-select option {
+
+            background:#111827;
+
+            color:white;
+        }
+
+        /* ====================================
+           REMOVE NUMBER ARROWS
+        ==================================== */
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+
+            -webkit-appearance:none;
+
+            margin:0;
+        }
+
+        input[type=number] {
+
+            -moz-appearance:textfield;
+        }
+
+        /* ====================================
+           BUTTON
+        ==================================== */
+
+        .btn-signup {
+
+            height:66px;
+
+            border-radius:22px;
+
+            font-size:20px;
+
+            font-weight:900;
+
+            background:
+            linear-gradient(
+                135deg,
+                var(--cyan),
+                var(--green)
+            );
+
+            border:none;
+
+            color:#03131f;
+
+            transition:0.35s;
+
+            position:relative;
+
+            overflow:hidden;
+
+            letter-spacing:0.5px;
+
+            box-shadow:
+            0 10px 28px rgba(0,255,149,0.22);
+        }
+
+        .btn-signup::before{
+
+            content:"";
+
+            position:absolute;
+
+            inset:0;
+
+            background:
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.55),
+                transparent
+            );
+
+            transform:
+            translateX(-100%);
+        }
+
+        .btn-signup:hover::before{
+
+            animation:
+            shine 1s linear;
+        }
+
+        @keyframes shine{
+
+            to{
+                transform:
+                translateX(100%);
+            }
+        }
+
+        .btn-signup:hover {
+
+            transform:
+            translateY(-5px)
+            scale(1.01);
+
+            box-shadow:
+            0 0 28px rgba(0,255,149,0.35);
+        }
+
+        /* ====================================
+           LOGIN LINK
+        ==================================== */
+
+        .login-link {
+
+            color:#d1d5db;
+
+            text-decoration:none;
+
+            transition:0.25s;
+
+            font-weight:600;
+
+            position:relative;
+        }
+
+        .login-link::after{
+
+            content:"";
+
+            position:absolute;
+
+            left:0;
+
+            bottom:-4px;
+
+            width:0%;
+
+            height:2px;
+
+            background:var(--cyan);
+
+            transition:0.3s;
+        }
+
+        .login-link:hover {
+
+            color:white;
+        }
+
+        .login-link:hover::after{
+
+            width:100%;
+        }
+
+        /* ====================================
+           SMALL FLOATING LABEL
+        ==================================== */
+
+        .premium-tag{
+
+            position:absolute;
+
+            top:24px;
+
+            right:24px;
+
+            padding:8px 16px;
+
+            border-radius:50px;
+
+            background:
+            rgba(255,255,255,0.08);
+
+            border:
+            1px solid rgba(255,255,255,0.10);
+
+            font-size:12px;
+
+            font-weight:800;
+
+            letter-spacing:1px;
+
+            color:#dffcff;
+
+            backdrop-filter:blur(10px);
+        }
+
+        /* ====================================
+           AUTOFILL FIX
+        ==================================== */
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+
+            -webkit-box-shadow:
+            0 0 0px 1000px transparent inset !important;
+
+            -webkit-text-fill-color:white !important;
+
+            caret-color:white;
+
+            transition:
+            background-color 9999s ease-in-out 0s;
+        }
+
+        /* ====================================
+           RESPONSIVE
+        ==================================== */
+
+        @media(max-width:768px){
+
+            .signup-card{
+
+                padding:36px 24px;
+
+                border-radius:30px;
+            }
+
+            .signup-title{
+
+                font-size:42px;
+            }
+
+            .logo-box{
+
+                width:90px;
+
+                height:90px;
+
+                font-size:34px;
+            }
+
+            .premium-tag{
+
+                top:16px;
+
+                right:16px;
+
+                font-size:10px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="animated-grid"></div>
+
+<div class="noise"></div>
+
+<div class="aurora aurora1"></div>
+<div class="aurora aurora2"></div>
+<div class="aurora aurora3"></div>
+
+<div class="particle p1"></div>
+<div class="particle p2"></div>
+<div class="particle p3"></div>
+<div class="particle p4"></div>
+<div class="particle p5"></div>
+<div class="particle p6"></div>
+
+<div class="main-wrapper">
+
+    <div class="signup-card">
+
+        <div class="top-glow"></div>
+
+        <div class="premium-tag">
+
+            PREMIUM UI
+
+        </div>
+
+        <div class="logo-box">
+
+            <i class="fa-solid fa-wallet"></i>
+
+        </div>
+
+        <h1 class="signup-title">
+
+            Create Account
+
+        </h1>
+
+        <p class="signup-subtitle">
+
+            Start managing your expenses smarter 💸
+            <br>
+            Futuristic • Secure • Dynamic Experience
+
+        </p>
+
+        <form method="POST">
+
+            <!-- USERNAME -->
+
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </span>
+
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    placeholder="Enter Username"
+                    required
+                >
+
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                </span>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Enter Email"
+                    required
+                >
+
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                </span>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Enter Password"
+                    required
+                >
+
+            </div>
+
+            <!-- CURRENT BALANCE -->
+
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                </span>
+
+                <input
+                    type="number"
+                    name="income"
+                    class="form-control"
+                    placeholder="Enter Current Balance"
+                    required
+                >
+
+            </div>
+
+            <!-- MONTHLY BUDGET -->
+
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </span>
+
+                <input
+                    type="number"
+                    name="budget"
+                    class="form-control"
+                    placeholder="Enter Monthly Budget"
+                    required
+                >
+
+            </div>
+
+            <!-- SECURITY QUESTION -->
+
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </span>
+
+                <select
+                    name="security_question"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="">
+                        Select Security Question
+                    </option>
+
+                    <option>
+                        What is your pet name?
+                    </option>
+
+                    <option>
+                        What is your favourite food?
+                    </option>
+
+                    <option>
+                        What is your birthplace?
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- SECURITY ANSWER -->
+
+            <div class="input-group mb-4">
+
+                <span class="input-group-text">
+
+                    <i class="fa-solid fa-key"></i>
+
+                </span>
+
+                <input
+                    type="text"
+                    name="security_answer"
+                    class="form-control"
+                    placeholder="Enter Security Answer"
+                    required
+                >
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="btn btn-signup w-100"
+            >
+
+                Create Premium Account
+
+            </button>
+
+        </form>
+
+        <div class="text-center mt-4">
+
+            <a
+                href="/"
+                class="login-link"
+            >
+
+                Already have an account?
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

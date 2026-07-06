@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Delete Account
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        body {
+
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #3b0a0a 0%, transparent 30%),
+                radial-gradient(circle at bottom right, #540d0d 0%, transparent 30%),
+                linear-gradient(135deg, #0a0a0a, #1b1b1b);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            overflow-x: hidden;
+
+        }
+
+        .danger-card {
+
+            width: 100%;
+            max-width: 720px;
+
+            background: rgba(22, 22, 22, 0.92);
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            border-radius: 30px;
+
+            padding: 50px;
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 0 50px rgba(255, 0, 0, 0.18),
+                0 20px 60px rgba(0, 0, 0, 0.6);
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+        .danger-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            background: rgba(255, 0, 0, 0.08);
+
+            border-radius: 50%;
+
+            top: -120px;
+            right: -120px;
+
+            filter: blur(10px);
+
+        }
+
+        .warning-icon {
+
+            width: 110px;
+            height: 110px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(135deg, #ff2d2d, #8b0000);
+
+            box-shadow:
+                0 0 35px rgba(255, 0, 0, 0.45);
+
+            font-size: 45px;
+
+            margin-bottom: 28px;
+
+        }
+
+        .page-title {
+
+            text-align: center;
+
+            font-size: 40px;
+            font-weight: 800;
+
+            margin-bottom: 18px;
+
+            letter-spacing: 1px;
+
+        }
+
+        .warning-text {
+
+            text-align: center;
+
+            font-size: 18px;
+
+            color: #d8d8d8;
+
+            line-height: 1.8;
+
+            margin-bottom: 35px;
+
+        }
+
+        .danger-box {
+
+            background: rgba(255, 0, 0, 0.08);
+
+            border: 1px solid rgba(255, 0, 0, 0.2);
+
+            border-radius: 18px;
+
+            padding: 18px 22px;
+
+            margin-bottom: 35px;
+
+        }
+
+        .danger-box ul {
+
+            margin: 0;
+            padding-left: 18px;
+
+        }
+
+        .danger-box li {
+
+            margin-bottom: 10px;
+
+            color: #f3c5c5;
+
+        }
+
+        .btn-delete {
+
+            width: 100%;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(135deg, #ff1e1e, #8b0000);
+
+            color: white;
+
+            font-size: 17px;
+            font-weight: 700;
+
+            transition: 0.3s ease;
+
+            box-shadow:
+                0 10px 25px rgba(255, 0, 0, 0.25);
+
+        }
+
+        .btn-delete:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 14px 32px rgba(255, 0, 0, 0.4);
+
+        }
+
+        .btn-cancel {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border-radius: 16px;
+
+            background: transparent;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            color: white;
+
+            font-weight: 600;
+
+            transition: 0.3s ease;
+
+        }
+
+        .btn-cancel:hover {
+
+            background: rgba(255, 255, 255, 0.08);
+
+            transform: translateY(-2px);
+
+        }
+
+        .footer-text {
+
+            text-align: center;
+
+            color: #999;
+
+            font-size: 13px;
+
+            margin-top: 25px;
+
+            letter-spacing: 0.5px;
+
+        }
+
+        @media(max-width:768px) {
+
+            .danger-card {
+
+                padding: 35px 24px;
+
+            }
+
+            .page-title {
+
+                font-size: 30px;
+
+            }
+
+        }
+
+        /* FIX AUTOFILL WHITE BACKGROUND ISSUE */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #111827 inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="danger-card">
+
+        <div class="warning-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+        <h1 class="page-title">
+
+            Delete Account
+
+        </h1>
+
+        <p class="warning-text">
+
+            Your Expense Tracker account and all associated data
+            will be permanently removed from the system.
+
+            <br><br>
+
+            This action is irreversible.
+
+        </p>
+
+        <div class="danger-box">
+
+            <ul>
+
+                <li>
+                    All expenses will be deleted permanently
+                </li>
+
+                <li>
+                    Exported reports & history cannot be recovered
+                </li>
+
+                <li>
+                    Account settings and profile data will be erased
+                </li>
+
+            </ul>
+
+        </div>
+
+        <a
+            href="/delete_account"
+            class="btn btn-delete text-decoration-none d-flex align-items-center justify-content-center gap-2"
+        >
+
+            <i class="fa-solid fa-trash"></i>
+
+            YES, DELETE MY ACCOUNT
+
+        </a>
+
+        <a
+            href="/settings_storage"
+            class="btn btn-cancel mt-3"
+        >
+
+            Cancel & Go Back
+
+        </a>
+
+        <div class="footer-text">
+
+            Expense Tracker Security System
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+
+Account Creation & Login Records
+
+</title>
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet"
+>
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    background:
+    radial-gradient(circle at top left,#02111f,#000000 65%);
+
+    color:white;
+
+    font-family:
+    "Segoe UI",
+    sans-serif;
+
+    position:relative;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg-grid{
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+
+    background-size:45px 45px;
+
+    z-index:-5;
+
+    animation:gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+
+    from{
+        transform:translateY(0px);
+    }
+
+    to{
+        transform:translateY(45px);
+    }
+}
+
+.glow{
+
+    position:fixed;
+
+    border-radius:50%;
+
+    filter:blur(130px);
+
+    opacity:0.24;
+
+    z-index:-4;
+
+    animation:floatGlow 9s ease-in-out infinite;
+}
+
+.glow1{
+
+    width:420px;
+    height:420px;
+
+    background:#00e5ff;
+
+    top:-120px;
+    left:-120px;
+}
+
+.glow2{
+
+    width:420px;
+    height:420px;
+
+    background:#00ff95;
+
+    bottom:-120px;
+    right:-120px;
+
+    animation-delay:2s;
+}
+
+.glow3{
+
+    width:320px;
+    height:320px;
+
+    background:#ffe600;
+
+    top:40%;
+    left:42%;
+
+    animation-delay:4s;
+}
+
+@keyframes floatGlow{
+
+    0%{
+        transform:translateY(0px) scale(1);
+    }
+
+    50%{
+        transform:translateY(-20px) scale(1.08);
+    }
+
+    100%{
+        transform:translateY(0px) scale(1);
+    }
+}
+
+/* ================= MAIN ================= */
+
+.main{
+
+    width:95%;
+
+    max-width:1600px;
+
+    margin:auto;
+
+    padding:50px 0;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:50px;
+
+    border-radius:38px;
+
+    margin-bottom:40px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,229,255,0.10),
+        rgba(255,255,255,0.04)
+    );
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 0 50px rgba(0,229,255,0.12);
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    background:
+    radial-gradient(circle,#00e5ff40,transparent);
+
+    top:-100px;
+    right:-70px;
+
+    border-radius:50%;
+}
+
+.hero-title{
+
+    font-size:68px;
+
+    font-weight:1000;
+
+    line-height:1.1;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00e5ff,
+        #00ff95,
+        #ffe600
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-subtitle{
+
+    margin-top:18px;
+
+    max-width:900px;
+
+    color:#d8e8ff;
+
+    font-size:18px;
+
+    line-height:1.8;
+}
+
+.hero-badges{
+
+    margin-top:28px;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:16px;
+}
+
+.hero-badge{
+
+    padding:12px 20px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    font-weight:800;
+
+    color:#eaf5ff;
+
+    backdrop-filter:blur(10px);
+}
+
+/* ================= STATS ================= */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:28px;
+
+    margin-bottom:40px;
+}
+
+.stat-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:34px;
+
+    padding:34px;
+
+    backdrop-filter:blur(20px);
+
+    transition:0.35s;
+
+    box-shadow:
+    0 0 30px rgba(0,0,0,0.3);
+}
+
+.stat-card:hover{
+
+    transform:
+    translateY(-8px);
+
+    box-shadow:
+    0 18px 40px rgba(0,0,0,0.4),
+    0 0 28px rgba(0,229,255,0.14);
+}
+
+.stat-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    background:
+    radial-gradient(circle,#00e5ff25,transparent);
+
+    top:-60px;
+    right:-60px;
+
+    border-radius:50%;
+}
+
+.stat-icon{
+
+    width:75px;
+    height:75px;
+
+    border-radius:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:30px;
+
+    margin-bottom:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95
+    );
+
+    color:black;
+
+    box-shadow:
+    0 0 25px rgba(0,229,255,0.25);
+}
+
+.stat-card h2{
+
+    font-size:52px;
+
+    font-weight:1000;
+}
+
+.stat-card p{
+
+    margin-top:12px;
+
+    color:#d7e6ff;
+
+    font-size:18px;
+}
+
+/* ================= GLASS SECTION ================= */
+
+.glass-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:38px;
+
+    padding:38px;
+
+    backdrop-filter:blur(22px);
+
+    margin-bottom:38px;
+
+    box-shadow:
+    0 0 35px rgba(0,0,0,0.35);
+}
+
+.glass-box::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:200px;
+    height:200px;
+
+    background:
+    radial-gradient(circle,#00ff9530,transparent);
+
+    right:-70px;
+    top:-70px;
+
+    border-radius:50%;
+}
+
+.section-heading{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:30px;
+}
+
+.section-icon{
+
+    width:78px;
+    height:78px;
+
+    border-radius:26px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95
+    );
+
+    color:black;
+
+    font-size:32px;
+
+    box-shadow:
+    0 0 25px rgba(0,229,255,0.25);
+}
+
+.section-heading h2{
+
+    font-size:40px;
+
+    font-weight:1000;
+}
+
+.section-heading p{
+
+    margin:0;
+
+    color:#cfe0f8;
+}
+
+/* ================= LOGIN RECORDS ================= */
+
+.login-record{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.03)
+    );
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    border-radius:26px;
+
+    padding:24px;
+
+    margin-bottom:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    transition:0.35s;
+}
+
+.login-record:hover{
+
+    transform:
+    translateY(-5px);
+
+    box-shadow:
+    0 0 24px rgba(0,229,255,0.10);
+}
+
+.login-record::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    background:
+    radial-gradient(circle,#00e5ff20,transparent);
+
+    top:-40px;
+    right:-40px;
+
+    border-radius:50%;
+}
+
+.record-left{
+
+    font-size:17px;
+
+    line-height:1.9;
+
+    color:#e8f3ff;
+}
+
+.record-label{
+
+    color:#00ffd5;
+
+    font-weight:900;
+}
+
+.delete-btn{
+
+    width:58px;
+
+    height:58px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff1744,
+        #ff5252
+    );
+
+    color:white;
+
+    font-size:20px;
+
+    transition:0.35s;
+}
+
+.delete-btn:hover{
+
+    transform:
+    scale(1.10)
+    rotate(8deg);
+
+    box-shadow:
+    0 0 25px rgba(255,0,80,0.45);
+}
+
+/* ================= USERS ================= */
+
+.users-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(360px,1fr));
+
+    gap:24px;
+}
+
+.user-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.03)
+    );
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    border-radius:30px;
+
+    padding:28px;
+
+    transition:0.35s;
+}
+
+.user-card:hover{
+
+    transform:
+    translateY(-6px);
+
+    box-shadow:
+    0 0 28px rgba(0,229,255,0.12);
+}
+
+.user-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    background:
+    radial-gradient(circle,#00ff9525,transparent);
+
+    top:-50px;
+    right:-50px;
+
+    border-radius:50%;
+}
+
+.user-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:20px;
+}
+
+.user-avatar{
+
+    width:72px;
+    height:72px;
+
+    border-radius:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95
+    );
+
+    color:black;
+
+    font-size:28px;
+
+    font-weight:1000;
+
+    box-shadow:
+    0 0 22px rgba(0,229,255,0.25);
+}
+
+.user-name{
+
+    font-size:28px;
+
+    font-weight:1000;
+}
+
+.user-email{
+
+    color:#d6e6ff;
+
+    margin-top:4px;
+
+    word-break:break-word;
+}
+
+.user-meta{
+
+    margin-top:15px;
+}
+
+.meta-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:12px;
+
+    color:#dcecff;
+
+    font-size:15px;
+}
+
+.meta-value{
+
+    color:#00ffd5;
+
+    font-weight:900;
+}
+
+.view-btn{
+
+    width:100%;
+
+    margin-top:22px;
+
+    border:none;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00c853,
+        #00ff95
+    );
+
+    color:black;
+
+    font-size:16px;
+
+    font-weight:1000;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    transition:0.35s;
+}
+
+.view-btn:hover{
+
+    transform:
+    translateY(-4px);
+
+    color:black;
+
+    box-shadow:
+    0 0 25px rgba(0,255,149,0.28);
+}
+
+/* ================= BACK BUTTON ================= */
+
+.back-btn{
+
+    width:100%;
+
+    margin-top:35px;
+
+    height:68px;
+
+    border:none;
+
+    border-radius:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a11cb,
+        #2575fc
+    );
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:1000;
+
+    transition:0.35s;
+
+    box-shadow:
+    0 0 25px rgba(37,117,252,0.25);
+}
+
+.back-btn:hover{
+
+    transform:
+    translateY(-5px);
+
+    box-shadow:
+    0 0 35px rgba(37,117,252,0.42);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .hero{
+
+        padding:35px 28px;
+    }
+
+    .hero-title{
+
+        font-size:48px;
+    }
+
+    .section-heading h2{
+
+        font-size:30px;
+    }
+
+    .login-record{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+}
+
+@media(max-width:600px){
+
+    .hero-title{
+
+        font-size:38px;
+    }
+
+    .user-top{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="glow glow1"></div>
+
+<div class="glow glow2"></div>
+
+<div class="glow glow3"></div>
+
+<div class="main">
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div class="hero-title">
+
+            📜 Account Creation & Login Records
+
+        </div>
+
+        <div class="hero-subtitle">
+
+            Real-time administrative monitoring system for account creations, user activity, login history and admin access analytics.
+
+        </div>
+
+        <div class="hero-badges">
+
+            <div class="hero-badge">
+                🟢 Live Tracking Active
+            </div>
+
+            <div class="hero-badge">
+                🔐 Secure Access Logs
+            </div>
+
+            <div class="hero-badge">
+                ⚡ Admin Monitoring Enabled
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <h2>
+
+                {{ users | length }}
+
+            </h2>
+
+            <p>
+
+                Total Registered Accounts
+
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-right-to-bracket"></i>
+
+            </div>
+
+            <h2>
+
+                {{ total_logins }}
+
+            </h2>
+
+            <p>
+
+                Total Login Records
+
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-clock"></i>
+
+            </div>
+
+            <h2>
+
+                {% if latest_login %}
+
+                {{ latest_login.login_time.strftime('%d %b') }}
+
+                {% else %}
+
+                No Data
+
+                {% endif %}
+
+            </h2>
+
+            <p>
+
+                Latest Login Activity
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ADMIN RECORDS -->
+
+    <div class="glass-box">
+
+        <div class="section-heading">
+
+            <div class="section-icon">
+
+                <i class="fa-solid fa-user-shield"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+
+                    Admin Login Activity
+
+                </h2>
+
+                <p>
+
+                    Secure admin access history and monitoring logs.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="mb-4">
+
+            <div class="meta-row">
+
+                <span>
+
+                    Admin Account Created
+
+                </span>
+
+                <span class="meta-value">
+
+                    01 Jan 2026
+
+                </span>
+
+            </div>
+
+            <div class="meta-row">
+
+                <span>
+
+                    Total Admin Logins
+
+                </span>
+
+                <span class="meta-value">
+
+                    {{ admin_login_records|length }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        {% for record in admin_login_records %}
+
+        <div class="login-record">
+
+            <div class="record-left">
+
+                <span class="record-label">
+
+                    Login Time:
+
+                </span>
+
+                {{ record.login_time.strftime('%d %b %Y - %I:%M %p') }}
+
+                <br>
+
+                <span class="record-label">
+
+                    IP Address:
+
+                </span>
+
+                {{ record.ip_address }}
+
+            </div>
+
+            <form
+            method="POST"
+            action="/delete_admin_login_record/{{ record.id }}"
+            onsubmit="return confirm('Delete this admin login record?')"
+            >
+
+                <button
+                type="submit"
+                class="delete-btn"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- USERS -->
+
+    <div class="glass-box">
+
+        <div class="section-heading">
+
+            <div class="section-icon">
+
+                <i class="fa-solid fa-users-gear"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+
+                    User Accounts
+
+                </h2>
+
+                <p>
+
+                    View user-wise login history and account activity records.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="users-grid">
+
+            {% for user in users %}
+
+            <div class="user-card">
+
+                <div class="user-top">
+
+                    <div class="user-avatar">
+
+                        {{ user.username[0]|upper }}
+
+                    </div>
+
+                    <div>
+
+                        <div class="user-name">
+
+                            {{ user.username }}
+
+                        </div>
+
+                        <div class="user-email">
+
+                            {{ user.email }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="user-meta">
+
+                    <div class="meta-row">
+
+                        <span>
+
+                            Account Created
+
+                        </span>
+
+                        <span class="meta-value">
+
+                            {% if user.created_at %}
+
+                            {{ user.created_at.strftime('%d %b %Y') }}
+
+                            {% else %}
+
+                            Old Account
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <a
+                href="/user_login_records/{{ user.id }}"
+                class="view-btn"
+                >
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    View Login Records
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <a href="/admin_dashboard">
+
+            <button class="back-btn">
+
+                ← Back To Admin Dashboard
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

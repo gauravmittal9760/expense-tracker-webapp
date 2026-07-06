@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        Admin Dashboard
+    </title>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:
+    radial-gradient(circle at top left,#0f172a,#020617 55%,#000);
+
+    color:white;
+
+    font-family:
+    "Poppins",
+    sans-serif;
+
+    overflow-x:hidden;
+
+    position:relative;
+}
+
+/* =========================
+BACKGROUND EFFECTS
+========================= */
+
+.bg-grid{
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+    linear-gradient(
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg,
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px
+    );
+
+    background-size:55px 55px;
+
+    animation:gridMove 14s linear infinite;
+
+    z-index:-5;
+}
+
+@keyframes gridMove{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    100%{
+        transform:translateY(55px);
+    }
+}
+
+.glow{
+
+    position:fixed;
+
+    border-radius:50%;
+
+    filter:blur(100px);
+
+    opacity:0.22;
+
+    z-index:-4;
+
+    animation:floatGlow 10s ease-in-out infinite;
+}
+
+.glow1{
+
+    width:320px;
+    height:320px;
+
+    background:#00e5ff;
+
+    top:-120px;
+    left:-80px;
+}
+
+.glow2{
+
+    width:280px;
+    height:280px;
+
+    background:#7b2ff7;
+
+    right:-90px;
+    bottom:-100px;
+
+    animation-delay:3s;
+}
+
+.glow3{
+
+    width:220px;
+    height:220px;
+
+    background:#00ff95;
+
+    top:45%;
+    left:55%;
+
+    animation-delay:5s;
+}
+
+@keyframes floatGlow{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-35px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+
+    width:320px;
+
+    height:100vh;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    background:
+    rgba(10,15,30,0.82);
+
+    backdrop-filter:blur(22px);
+
+    border-right:
+    1px solid rgba(255,255,255,0.08);
+
+    padding:22px 18px;
+
+    overflow-y:auto;
+
+    z-index:50;
+}
+
+.sidebar::-webkit-scrollbar{
+
+    width:4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+
+    background:#00e5ff;
+}
+
+/* =========================
+PROFILE
+========================= */
+
+.logo{
+
+    text-align:center;
+
+    position:relative;
+}
+
+.profile-ring{
+
+    width:148px;
+    height:148px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    padding:5px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95,
+        #7b2ff7
+    );
+
+    animation:ringRotate 6s linear infinite;
+}
+
+@keyframes ringRotate{
+
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+.profile-inner{
+
+    width:100%;
+    height:100%;
+
+    border-radius:50%;
+
+    background:#081120;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.profile-pic{
+
+    width:132px;
+    height:132px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    cursor:pointer;
+
+    transition:0.4s;
+}
+
+.profile-pic:hover{
+
+    transform:scale(1.08);
+}
+
+.default-icon{
+
+    width:132px;
+    height:132px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95
+    );
+
+    font-size:60px;
+
+    color:#00111f;
+
+    cursor:pointer;
+}
+
+.profile-options{
+
+    display:none;
+
+    margin-top:18px;
+
+    animation:fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0px);
+    }
+}
+
+.upload-btn,
+.remove-btn{
+
+    width:100%;
+
+    margin-top:12px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-weight:800;
+
+    font-size:15px;
+
+    transition:0.3s;
+}
+
+.upload-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #00ff95,
+        #00e5ff
+    );
+
+    color:#00111f;
+}
+
+.remove-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff1744,
+        #ff5e62
+    );
+
+    color:white;
+}
+
+.upload-btn:hover,
+.remove-btn:hover{
+
+    transform:translateY(-3px);
+}
+
+.logo-text{
+
+    font-size:28px;
+
+    font-weight:900;
+
+    margin-top:22px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00e5ff,
+        #00ff95
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.logo-sub{
+
+    color:#9fb3c8;
+
+    font-size:13px;
+
+    margin-top:6px;
+}
+
+/* =========================
+MENU
+========================= */
+
+.menu-title{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    text-transform:uppercase;
+
+    margin:
+    34px 0 14px 14px;
+
+    letter-spacing:2px;
+
+    font-weight:700;
+}
+
+.menu-btn{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    width:100%;
+
+    padding:16px 18px;
+
+    margin-bottom:14px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    color:white;
+
+    overflow:hidden;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.05);
+
+    transition:0.35s;
+}
+
+.menu-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:240px;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    transform:rotate(25deg);
+
+    left:-150px;
+    top:-60px;
+
+    transition:0.5s;
+}
+
+.menu-btn:hover::before{
+
+    left:420px;
+}
+
+.menu-btn:hover{
+
+    transform:
+    translateX(8px)
+    scale(1.02);
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(0,229,255,0.18),
+        rgba(0,255,149,0.14)
+    );
+
+    box-shadow:
+    0 0 20px rgba(0,255,255,0.12);
+
+    color:white;
+}
+
+.menu-btn i{
+
+    font-size:20px;
+
+    width:28px;
+
+    color:#00e5ff;
+}
+
+/* =========================
+MAIN
+========================= */
+
+.main{
+
+    margin-left:320px;
+
+    padding:40px;
+}
+
+.top-bar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+}
+
+.title{
+
+    font-size:58px;
+
+    font-weight:900;
+
+    line-height:1.1;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00e5ff,
+        #00ff95,
+        #7b2ff7
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+
+    color:#9fb3c8;
+
+    margin-top:10px;
+
+    font-size:16px;
+}
+
+.live-status{
+
+    padding:14px 22px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    backdrop-filter:blur(16px);
+
+    animation:pulse 2.5s infinite;
+}
+
+.live-dot{
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:#00ff95;
+
+    box-shadow:
+    0 0 14px #00ff95;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.03);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* =========================
+STATS
+========================= */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:26px;
+}
+
+.stat-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:30px;
+
+    padding:32px;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    transition:0.4s;
+}
+
+.stat-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    top:-60px;
+    right:-60px;
+}
+
+.stat-card:hover{
+
+    transform:
+    translateY(-10px)
+    scale(1.02);
+
+    box-shadow:
+    0 0 30px rgba(0,255,255,0.15);
+}
+
+.stat-icon{
+
+    width:78px;
+    height:78px;
+
+    border-radius:22px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin-bottom:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95
+    );
+
+    box-shadow:
+    0 0 25px rgba(0,255,255,0.22);
+}
+
+.stat-icon i{
+
+    font-size:34px;
+
+    color:#00111f;
+}
+
+.stat-card h2{
+
+    font-size:54px;
+
+    font-weight:900;
+}
+
+.stat-card p{
+
+    color:#cbd5e1;
+
+    margin-top:8px;
+
+    font-size:17px;
+}
+
+/* =========================
+BOTTOM GRID
+========================= */
+
+.bottom-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    1.2fr 0.8fr;
+
+    gap:28px;
+
+    margin-top:35px;
+}
+
+.glass{
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:30px;
+
+    padding:30px;
+
+    backdrop-filter:blur(18px);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.glass::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.04),
+        transparent
+    );
+
+    transform:translateX(-100%);
+
+    animation:glassShine 8s linear infinite;
+}
+
+@keyframes glassShine{
+
+    100%{
+        transform:translateX(100%);
+    }
+}
+
+.glass h3{
+
+    font-size:28px;
+
+    margin-bottom:24px;
+
+    font-weight:900;
+
+    color:#00e5ff;
+}
+
+/* =========================
+ACTIVITY CENTER
+========================= */
+
+.activity-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+}
+
+.activity-item{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:18px 20px;
+
+    border-radius:22px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.05);
+
+    transition:0.35s;
+}
+
+.activity-item:hover{
+
+    transform:translateX(8px);
+
+    background:
+    rgba(0,229,255,0.08);
+}
+
+.activity-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+}
+
+.activity-icon{
+
+    width:58px;
+    height:58px;
+
+    border-radius:18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00e5ff,
+        #00ff95
+    );
+
+    color:#00111f;
+
+    font-size:22px;
+}
+
+.activity-text h5{
+
+    margin:0;
+
+    font-size:18px;
+
+    font-weight:800;
+}
+
+.activity-text p{
+
+    margin:4px 0 0;
+
+    color:#9fb3c8;
+
+    font-size:14px;
+}
+
+.activity-badge{
+
+    padding:8px 14px;
+
+    border-radius:14px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    background:
+    rgba(0,255,149,0.12);
+
+    color:#00ff95;
+}
+
+/* =========================
+SYSTEM STATUS
+========================= */
+
+.status-box{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+}
+
+.status-item{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:18px 20px;
+
+    border-radius:20px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.05);
+}
+
+.status-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+}
+
+.status-left i{
+
+    font-size:22px;
+
+    color:#00e5ff;
+}
+
+.status-text{
+
+    font-size:16px;
+
+    font-weight:700;
+}
+
+.status-online{
+
+    color:#00ff95;
+
+    font-weight:800;
+}
+
+/* =========================
+MODAL
+========================= */
+
+.modal-bg{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.88);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:9999;
+
+    backdrop-filter:blur(8px);
+}
+
+.zoom-img{
+
+    width:440px;
+
+    max-width:92%;
+
+    border-radius:32px;
+
+    border:5px solid #00e5ff;
+
+    box-shadow:
+    0 0 45px rgba(0,255,255,0.35);
+
+    animation:zoomIn 0.4s ease;
+}
+
+@keyframes zoomIn{
+
+    from{
+        transform:scale(0.7);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.close-btn{
+
+    position:absolute;
+
+    top:25px;
+    right:35px;
+
+    font-size:45px;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+    .bottom-grid{
+
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+
+        position:relative;
+
+        width:100%;
+
+        height:auto;
+    }
+
+    .main{
+
+        margin-left:0;
+    }
+
+    .title{
+
+        font-size:40px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="glow glow1"></div>
+
+<div class="glow glow2"></div>
+
+<div class="glow glow3"></div>
+
+<!-- =========================
+SIDEBAR
+========================= -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <div class="profile-ring">
+
+            <div class="profile-inner">
+
+                {% if admin_profile_pic %}
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + admin_profile_pic) }}"
+                        class="profile-pic"
+                        onclick="toggleOptions(); openZoom();"
+                    >
+
+                {% else %}
+
+                    <div
+                        class="default-icon"
+                        onclick="toggleOptions()"
+                    >
+
+                        <i class="fa-solid fa-user-secret"></i>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <div
+            class="profile-options"
+            id="profileOptions"
+        >
+
+            <form
+                action="/upload_admin_profile"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <input
+                    type="file"
+                    name="profile_pic"
+                    class="form-control"
+                    required
+                >
+
+                <button class="upload-btn">
+
+                    Change / Add Picture
+
+                </button>
+
+            </form>
+
+            <a href="/remove_admin_profile">
+
+                <button class="remove-btn">
+
+                    Remove Picture
+
+                </button>
+
+            </a>
+
+        </div>
+
+        <div class="logo-text">
+
+            ADMIN PANEL
+
+        </div>
+
+        <div class="logo-sub">
+
+            Supreme Control Center ⚡
+
+        </div>
+
+    </div>
+
+    <div class="menu-title">
+
+        Management
+
+    </div>
+
+    <a
+        href="/admin_users"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-users"></i>
+
+        User Management
+
+    </a>
+
+    <a
+        href="/admin_security"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        Privacy & Security
+
+    </a>
+
+    <a
+        href="/storage_management"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-database"></i>
+
+        Storage Management
+
+    </a>
+
+    <a
+        href="/admin_backup"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-box-archive"></i>
+
+        Backup & Reset
+
+    </a>
+
+    <a
+        href="/account_login_records"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        Account Creation & Login Records
+
+    </a>
+
+    <a
+        href="/account_activity_center"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        Activity Center
+
+    </a>
+
+    <div class="menu-title">
+
+        Actions
+
+    </div>
+
+    <a
+        href="/dashboard"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-house"></i>
+
+        Normal Dashboard
+
+    </a>
+
+    <a
+        href="/admin_logout"
+        class="menu-btn"
+    >
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Admin Logout
+
+    </a>
+
+</div>
+
+<!-- =========================
+MAIN
+========================= -->
+
+<div class="main">
+
+    <div class="top-bar">
+
+        <div>
+
+            <div class="title">
+
+                Cyber Admin Dashboard ⚡
+
+            </div>
+
+            <div class="subtitle">
+
+                Real-time command center for managing your Expense Tracker ecosystem
+
+            </div>
+
+        </div>
+
+        <div class="live-status">
+
+            <div class="live-dot"></div>
+
+            System Online & Protected
+
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <h2>
+
+                {{ total_users }}
+
+            </h2>
+
+            <p>
+
+                Total Registered Users
+
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-wallet"></i>
+
+            </div>
+
+            <h2>
+
+                {{ total_expenses }}
+
+            </h2>
+
+            <p>
+
+                Total Expenses Added
+
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-image"></i>
+
+            </div>
+
+            <h2>
+
+                {{ total_images }}
+
+            </h2>
+
+            <p>
+
+                Images Stored
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM GRID -->
+
+    <div class="bottom-grid">
+
+        <!-- ACTIVITY CENTER -->
+
+        <div class="glass">
+
+            <h3>
+
+                ⚡ Live Activity Feed
+
+            </h3>
+
+            <div class="activity-list">
+
+                <div class="activity-item">
+
+                    <div class="activity-left">
+
+                        <div class="activity-icon">
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                        </div>
+
+                        <div class="activity-text">
+
+                            <h5>
+
+                                New Accounts Created
+
+                            </h5>
+
+                            <p>
+
+                                Real-time tracking of new user registrations
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="activity-badge">
+
+                        Active
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-left">
+
+                        <div class="activity-icon">
+
+                            <i class="fa-solid fa-chart-pie"></i>
+
+                        </div>
+
+                        <div class="activity-text">
+
+                            <h5>
+
+                                Expense Analytics
+
+                            </h5>
+
+                            <p>
+
+                                Monitor total spending activity instantly
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="activity-badge">
+
+                        Monitoring
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-left">
+
+                        <div class="activity-icon">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                        </div>
+
+                        <div class="activity-text">
+
+                            <h5>
+
+                                Security Layer Enabled
+
+                            </h5>
+
+                            <p>
+
+                                Admin protection and encrypted access active
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="activity-badge">
+
+                        Secured
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-left">
+
+                        <div class="activity-icon">
+
+                            <i class="fa-solid fa-server"></i>
+
+                        </div>
+
+                        <div class="activity-text">
+
+                            <h5>
+
+                                Cloud Sync Status
+
+                            </h5>
+
+                            <p>
+
+                                Database and server communication stable
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="activity-badge">
+
+                        Synced
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SYSTEM STATUS -->
+
+        <div class="glass">
+
+            <h3>
+
+                🛡️ System Status
+
+            </h3>
+
+            <div class="status-box">
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <i class="fa-solid fa-server"></i>
+
+                        <div class="status-text">
+
+                            Server Status
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-online">
+
+                        Online
+
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <i class="fa-solid fa-database"></i>
+
+                        <div class="status-text">
+
+                            Database Connection
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-online">
+
+                        Connected
+
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <i class="fa-solid fa-user-shield"></i>
+
+                        <div class="status-text">
+
+                            Admin Access
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-online">
+
+                        Verified
+
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                        <div class="status-text">
+
+                            Security Firewall
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-online">
+
+                        Protected
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================
+ZOOM MODAL
+========================= -->
+
+<div
+    class="modal-bg"
+    id="zoomModal"
+>
+
+    <div
+        class="close-btn"
+        onclick="closeZoom()"
+    >
+
+        ×
+
+    </div>
+
+    {% if admin_profile_pic %}
+
+    <img
+        src="{{ url_for('static', filename='uploads/' + admin_profile_pic) }}"
+        class="zoom-img"
+    >
+
+    {% endif %}
+
+</div>
+
+<script>
+
+function toggleOptions(){
+
+    let box =
+    document.getElementById(
+        "profileOptions"
+    );
+
+    if(box.style.display === "block"){
+
+        box.style.display = "none";
+    }
+
+    else{
+
+        box.style.display = "block";
+    }
+}
+
+function openZoom(){
+
+    document
+    .getElementById("zoomModal")
+    .style.display = "flex";
+}
+
+function closeZoom(){
+
+    document
+    .getElementById("zoomModal")
+    .style.display = "none";
+}
+
+</script>
+
+</body>
+
+</html>

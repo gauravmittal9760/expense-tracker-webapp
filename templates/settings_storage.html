@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Settings & Storage
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        *{
+
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+
+        }
+
+        body{
+
+            min-height:100vh;
+            background:
+            radial-gradient(circle at top left,#16213e 0%,transparent 30%),
+            radial-gradient(circle at bottom right,#3a0ca3 0%,transparent 30%),
+            linear-gradient(135deg,#050816,#0d111f,#151b2d);
+
+            color:white;
+            overflow-x:hidden;
+
+        }
+
+        .floating-blur{
+
+            position:fixed;
+            width:350px;
+            height:350px;
+            border-radius:50%;
+            filter:blur(120px);
+            opacity:0.18;
+            z-index:0;
+
+        }
+
+        .blur1{
+
+            background:#00d4ff;
+            top:-120px;
+            left:-120px;
+
+        }
+
+        .blur2{
+
+            background:#7b2ff7;
+            bottom:-120px;
+            right:-120px;
+
+        }
+
+        .main-wrapper{
+
+            position:relative;
+            z-index:2;
+
+        }
+
+        .settings-card{
+
+            background:rgba(20,25,40,0.75);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:30px;
+            padding:35px;
+            backdrop-filter:blur(18px);
+            box-shadow:
+            0 0 40px rgba(0,0,0,0.5),
+            inset 0 0 20px rgba(255,255,255,0.03);
+
+            animation:fadeIn 0.8s ease;
+
+        }
+
+        @keyframes fadeIn{
+
+            from{
+
+                opacity:0;
+                transform:translateY(30px);
+
+            }
+
+            to{
+
+                opacity:1;
+                transform:translateY(0);
+
+            }
+
+        }
+
+        .main-title{
+
+            font-size:42px;
+            font-weight:800;
+            text-align:center;
+            margin-bottom:12px;
+
+            background:linear-gradient(90deg,#ffffff,#00d4ff,#7b2ff7);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+
+        }
+
+        .sub-title{
+
+            text-align:center;
+            color:#cbd5e1;
+            margin-bottom:40px;
+            font-size:16px;
+
+        }
+
+        .setting-btn{
+
+            position:relative;
+            overflow:hidden;
+
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:20px;
+
+            padding:20px 22px;
+
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+
+            text-decoration:none;
+            color:white;
+
+            margin-bottom:18px;
+
+            transition:0.35s ease;
+
+        }
+
+        .setting-btn:hover{
+
+            transform:translateY(-4px) scale(1.01);
+
+            border-color:rgba(0,212,255,0.4);
+
+            background:rgba(255,255,255,0.08);
+
+            color:white;
+
+            box-shadow:
+            0 10px 25px rgba(0,0,0,0.35),
+            0 0 18px rgba(0,212,255,0.18);
+
+        }
+
+        .setting-btn::before{
+
+            content:"";
+            position:absolute;
+            top:0;
+            left:-120%;
+            width:120%;
+            height:100%;
+
+            background:linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.08),
+                transparent
+            );
+
+            transition:0.7s;
+
+        }
+
+        .setting-btn:hover::before{
+
+            left:130%;
+
+        }
+
+        .left-section{
+
+            display:flex;
+            align-items:center;
+            gap:18px;
+
+        }
+
+        .icon-box{
+
+            width:58px;
+            height:58px;
+
+            border-radius:18px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-size:22px;
+
+            background:linear-gradient(
+                135deg,
+                rgba(0,212,255,0.25),
+                rgba(123,47,247,0.25)
+            );
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            box-shadow:
+            inset 0 0 10px rgba(255,255,255,0.04);
+
+        }
+
+        .setting-title{
+
+            font-size:18px;
+            font-weight:700;
+            margin-bottom:2px;
+
+        }
+
+        .setting-desc{
+
+            color:#aeb8d0;
+            font-size:13px;
+
+        }
+
+        .status-badge{
+
+            padding:7px 15px;
+            border-radius:50px;
+            font-size:13px;
+            font-weight:700;
+
+        }
+
+        .status-on{
+
+            background:rgba(34,197,94,0.18);
+            color:#4ade80;
+            border:1px solid rgba(74,222,128,0.35);
+
+        }
+
+        .status-off{
+
+            background:rgba(239,68,68,0.18);
+            color:#ff6b6b;
+            border:1px solid rgba(255,107,107,0.35);
+
+        }
+
+        .storage-card{
+
+            background:
+            linear-gradient(
+                135deg,
+                rgba(0,212,255,0.15),
+                rgba(123,47,247,0.18)
+            );
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:24px;
+            padding:28px;
+            margin-bottom:22px;
+
+            position:relative;
+            overflow:hidden;
+
+        }
+
+        .storage-card::after{
+
+            content:"";
+            position:absolute;
+            width:180px;
+            height:180px;
+            border-radius:50%;
+            background:rgba(255,255,255,0.05);
+            top:-70px;
+            right:-70px;
+
+        }
+
+        .storage-title{
+
+            font-size:22px;
+            font-weight:800;
+            margin-bottom:20px;
+
+        }
+
+        .storage-grid{
+
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:18px;
+
+        }
+
+        .storage-box{
+
+            background:rgba(255,255,255,0.06);
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:18px;
+            padding:22px;
+            text-align:center;
+
+        }
+
+        .storage-box h2{
+
+            font-size:32px;
+            font-weight:800;
+            margin-bottom:5px;
+
+        }
+
+        .storage-box p{
+
+            color:#d1d5db;
+            margin:0;
+
+        }
+
+        .danger-btn{
+
+            border-color:rgba(255,0,0,0.2);
+
+        }
+
+        .danger-btn:hover{
+
+            border-color:rgba(255,0,0,0.45);
+
+            background:rgba(255,0,0,0.12);
+
+            box-shadow:
+            0 0 18px rgba(255,0,0,0.22);
+
+        }
+
+        .back-btn{
+
+            background:linear-gradient(
+                135deg,
+                #2563eb,
+                #7b2ff7
+            ) !important;
+
+            border:none !important;
+
+        }
+
+        .back-btn:hover{
+
+            box-shadow:
+            0 0 25px rgba(37,99,235,0.45);
+
+        }
+
+        @media(max-width:768px){
+
+            .settings-card{
+
+                padding:22px;
+
+            }
+
+            .main-title{
+
+                font-size:32px;
+
+            }
+
+            .setting-btn{
+
+                flex-direction:column;
+                align-items:flex-start;
+                gap:15px;
+
+            }
+
+            .storage-grid{
+
+                grid-template-columns:1fr;
+
+            }
+
+        }
+
+         /* GLOBAL AUTOFILL FIX */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #111827 inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="floating-blur blur1"></div>
+<div class="floating-blur blur2"></div>
+
+<div class="container py-5 main-wrapper">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-9">
+
+            <div class="settings-card">
+
+                <h1 class="main-title">
+
+                    ⚙️ Settings & Storage
+
+                </h1>
+
+                <p class="sub-title">
+
+                    Secure your account, manage preferences and control your expense tracker experience.
+
+                </p>
+
+                <!-- TWO STEP -->
+
+                <a
+                    href="/toggle_2step"
+                    class="setting-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Two Step Verification
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Add an extra security layer to your account
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% if user.two_step_enabled %}
+
+                    <span class="status-badge status-on">
+
+                        ENABLED
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="status-badge status-off">
+
+                        DISABLED
+
+                    </span>
+
+                    {% endif %}
+
+                </a>
+
+                <!-- PASSWORD -->
+
+                <a
+                    href="/change_password"
+                    class="setting-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-key"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Change Password
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Update and secure your login password
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-angle-right"></i>
+
+                </a>
+
+                <!-- EMAIL -->
+
+                <a
+                    href="/change_email"
+                    class="setting-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Change Email
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Update your recovery and login email
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-angle-right"></i>
+
+                </a>
+
+                <!-- SECURITY QUESTION -->
+
+                <a
+                    href="/change_security_question"
+                    class="setting-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Security Question
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Manage your account recovery question
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-angle-right"></i>
+
+                </a>
+
+                <!-- STORAGE -->
+
+                <div class="storage-card">
+
+                    <div class="storage-title">
+
+                        💾 Storage Analytics
+
+                    </div>
+
+                    <div class="storage-grid">
+
+                        <div class="storage-box">
+
+                            <h2>
+
+                                {{ storage_mb }}
+
+                            </h2>
+
+                            <p>
+
+                                MB Used
+
+                            </p>
+
+                        </div>
+
+                        <div class="storage-box">
+
+                            <h2>
+
+                                {{ total_images }}
+
+                            </h2>
+
+                            <p>
+
+                                Images Stored
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CURRENCY -->
+
+                <a
+                    href="/change_currency"
+                    class="setting-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Change Currency
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Customize your preferred currency display
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-angle-right"></i>
+
+                </a>
+
+                <!-- BACKUP -->
+
+                <a
+                    href="/backup_account"
+                    class="setting-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-database"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Restore & Backup
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Backup your account and restore saved data
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-angle-right"></i>
+
+                </a>
+
+                <!-- FACTORY RESET -->
+
+                <a
+                    href="/factory_reset_confirm"
+                    class="setting-btn danger-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Factory Reset
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Remove all expenses, goals and reports
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-angle-right"></i>
+
+                </a>
+
+                <!-- DELETE ACCOUNT -->
+
+                <a
+                    href="/delete_account_confirm"
+                    class="setting-btn danger-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-user-xmark"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Delete My Account
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Permanently remove your account forever
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-angle-right"></i>
+
+                </a>
+
+                <!-- BACK -->
+
+                <a
+                    href="/dashboard"
+                    class="setting-btn back-btn"
+                >
+
+                    <div class="left-section">
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-arrow-left"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="setting-title">
+
+                                Back To Dashboard
+
+                            </div>
+
+                            <div class="setting-desc">
+
+                                Return to your expense dashboard
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-house"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

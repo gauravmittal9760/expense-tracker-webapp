@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        Expense Predictions
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(circle at top left, rgba(13,110,253,0.18), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(25,135,84,0.16), transparent 30%),
+                #0f1115;
+
+            color: white;
+
+            overflow-x: hidden;
+
+            font-family: "Segoe UI", sans-serif;
+
+        }
+
+        .glow {
+
+            position: fixed;
+
+            width: 320px;
+            height: 320px;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            z-index: 0;
+
+        }
+
+        .glow-1 {
+
+            top: -100px;
+            left: -100px;
+
+            background: rgba(13,110,253,0.20);
+
+        }
+
+        .glow-2 {
+
+            bottom: -120px;
+            right: -120px;
+
+            background: rgba(25,135,84,0.18);
+
+        }
+
+        .main-wrapper {
+
+            position: relative;
+
+            z-index: 2;
+
+            padding-top: 45px;
+            padding-bottom: 50px;
+
+        }
+
+        .hero-card {
+
+            background: rgba(31,35,40,0.88);
+
+            backdrop-filter: blur(18px);
+
+            border-radius: 34px;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            overflow: hidden;
+
+            box-shadow:
+                0 0 40px rgba(0,0,0,0.40),
+                0 0 120px rgba(13,110,253,0.08);
+
+        }
+
+        .top-section {
+
+            padding: 42px 35px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #6610f2
+                );
+
+            position: relative;
+
+        }
+
+        .top-section::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(255,255,255,0.16),
+                    transparent
+                );
+
+        }
+
+        .prediction-icon {
+
+            width: 100px;
+            height: 100px;
+
+            margin: auto auto 18px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.18);
+
+            border: 2px solid rgba(255,255,255,0.22);
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 0 28px rgba(255,255,255,0.14);
+
+            font-size: 42px;
+
+            color: white;
+
+        }
+
+        .top-section h1 {
+
+            font-size: 40px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+
+            color: white;
+
+        }
+
+        .top-section p {
+
+            margin: 0;
+
+            color: rgba(255,255,255,0.92);
+
+            font-size: 15px;
+
+        }
+
+        .content-area {
+
+            padding: 35px;
+
+        }
+
+        .stats-card {
+
+            border-radius: 28px;
+
+            padding: 28px;
+
+            height: 100%;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: 0.35s;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.20);
+
+        }
+
+        .stats-card:hover {
+
+            transform:
+                translateY(-5px)
+                scale(1.01);
+
+        }
+
+        .stats-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            border-radius: 50%;
+
+            top: -60px;
+            right: -60px;
+
+            background: rgba(255,255,255,0.12);
+
+        }
+
+        .stats-icon {
+
+            width: 70px;
+            height: 70px;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+
+            margin-bottom: 18px;
+
+            background: rgba(255,255,255,0.16);
+
+            backdrop-filter: blur(10px);
+
+        }
+
+        .stats-card h5 {
+
+            font-size: 17px;
+
+            font-weight: 600;
+
+            margin-bottom: 14px;
+
+        }
+
+        .stats-card h2 {
+
+            font-size: 34px;
+
+            font-weight: 800;
+
+            margin: 0;
+
+        }
+
+        .primary-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #4b8dff
+                );
+
+        }
+
+        .success-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #198754,
+                    #20c997
+                );
+
+        }
+
+        .warning-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffc107,
+                    #ff9800
+                );
+
+            color: #111;
+
+        }
+
+        .warning-card .stats-icon {
+
+            background: rgba(0,0,0,0.10);
+
+        }
+
+        .trend-card {
+
+            margin-top: 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.05),
+                    rgba(255,255,255,0.03)
+                );
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 30px;
+
+            padding: 35px;
+
+            backdrop-filter: blur(14px);
+
+            transition: 0.35s;
+
+        }
+
+        .trend-card:hover {
+
+            transform: translateY(-3px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.07),
+                    rgba(255,255,255,0.04)
+                );
+
+        }
+
+        .trend-top {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            margin-bottom: 24px;
+
+        }
+
+        .trend-icon {
+
+            width: 75px;
+            height: 75px;
+
+            border-radius: 22px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6f42c1,
+                    #0d6efd
+                );
+
+            font-size: 32px;
+
+            box-shadow:
+                0 10px 30px rgba(13,110,253,0.20);
+
+        }
+
+        .trend-title {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            margin-bottom: 4px;
+
+        }
+
+        .trend-subtitle {
+
+            color: #bfbfbf;
+
+            font-size: 15px;
+
+        }
+
+        .trend-result {
+
+            font-size: 38px;
+
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #8ab4ff
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .btn-back {
+
+            margin-top: 35px;
+
+            width: 100%;
+
+            border: none;
+
+            border-radius: 20px;
+
+            padding: 15px;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dc3545,
+                    #ff5d73
+                );
+
+            color: white;
+
+            transition: 0.35s;
+
+            box-shadow:
+                0 12px 28px rgba(220,53,69,0.22);
+
+        }
+
+        .btn-back:hover {
+
+            transform: translateY(-2px);
+
+            color: white;
+
+            box-shadow:
+                0 16px 40px rgba(220,53,69,0.35);
+
+        }
+
+        @media(max-width:768px) {
+
+            .top-section h1 {
+
+                font-size: 30px;
+
+            }
+
+            .content-area {
+
+                padding: 22px;
+
+            }
+
+            .trend-result {
+
+                font-size: 28px;
+
+            }
+
+            .trend-title {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+        /* FIX AUTOFILL WHITE BACKGROUND ISSUE */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #111827 inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="glow glow-1"></div>
+
+<div class="glow glow-2"></div>
+
+<div class="container main-wrapper">
+
+    <div class="hero-card">
+
+        <!-- TOP SECTION -->
+
+        <div class="top-section">
+
+            <div class="prediction-icon">
+
+                <i class="bi bi-graph-up-arrow"></i>
+
+            </div>
+
+            <h1>
+                Expense Predictions
+            </h1>
+
+            <p>
+                Smart financial forecasting based on your spending patterns
+            </p>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div class="content-area">
+
+            <div class="row g-4">
+
+                <!-- TOTAL EXPENSE -->
+
+                <div class="col-md-4">
+
+                    <div class="stats-card primary-card">
+
+                        <div class="stats-icon">
+
+                            <i class="bi bi-wallet2"></i>
+
+                        </div>
+
+                        <h5>
+                            Total Expenses
+                        </h5>
+
+                        <h2>
+                            Rs.{{ total_expense }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <!-- AVERAGE -->
+
+                <div class="col-md-4">
+
+                    <div class="stats-card success-card">
+
+                        <div class="stats-icon">
+
+                            <i class="bi bi-bar-chart-line-fill"></i>
+
+                        </div>
+
+                        <h5>
+                            Average Spending
+                        </h5>
+
+                        <h2>
+                            Rs.{{ average }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <!-- PREDICTION -->
+
+                <div class="col-md-4">
+
+                    <div class="stats-card warning-card">
+
+                        <div class="stats-icon">
+
+                            <i class="bi bi-lightning-charge-fill"></i>
+
+                        </div>
+
+                        <h5>
+                            Next Month Prediction
+                        </h5>
+
+                        <h2>
+                            Rs.{{ prediction }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TREND -->
+
+            <div class="trend-card">
+
+                <div class="trend-top">
+
+                    <div class="trend-icon">
+
+                        <i class="bi bi-activity"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="trend-title">
+
+                            Spending Trend
+
+                        </div>
+
+                        <div class="trend-subtitle">
+
+                            AI based prediction and expense behaviour analysis
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="trend-result">
+
+                    {{ trend }}
+
+                </div>
+
+            </div>
+
+            <!-- BACK -->
+
+            <a
+                href="/analytics_menu"
+                class="btn-back"
+            >
+
+                <i class="bi bi-arrow-left-circle-fill"></i>
+
+                Back To Analytics
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
