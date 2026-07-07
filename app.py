@@ -1222,11 +1222,17 @@ def recover_by_email():
                     Regards Papa'''
                 )
 
-                print("BEFORE MAIL.SEND")
+                try:
+                    print("BEFORE MAIL.SEND")
 
-                mail.send(msg)
+                    mail.send(msg)
 
-                print("AFTER MAIL.SEND")
+                    print("AFTER MAIL.SEND")
+
+                except Exception as e:
+                    print("MAIL ERROR =", repr(e))
+                    raise
+
                 return render_template(
 
                     "recover_by_email.html",
@@ -1799,11 +1805,16 @@ Regards Papa
 
 """
 
-        print("BEFORE MAIL.SEND")
+        try:
+            print("BEFORE MAIL.SEND")
 
-        mail.send(msg)
+            mail.send(msg)
 
-        print("AFTER MAIL.SEND")
+            print("AFTER MAIL.SEND")
+
+        except Exception as e:
+            print("MAIL ERROR =", repr(e))
+            raise
 
         flash("OTP sent successfully")
 
