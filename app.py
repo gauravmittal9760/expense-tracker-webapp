@@ -740,11 +740,7 @@ Regards - Papa
 
                     try:
 
-                        print("OTP MAIL START")
-
                         mail.send(msg)
-
-                        print("OTP MAIL SENT")
 
                     except:
 
@@ -1226,8 +1222,11 @@ def recover_by_email():
                     Regards Papa'''
                 )
 
+                print("BEFORE MAIL.SEND")
+
                 mail.send(msg)
 
+                print("AFTER MAIL.SEND")
                 return render_template(
 
                     "recover_by_email.html",
@@ -1800,7 +1799,11 @@ Regards Papa
 
 """
 
+        print("BEFORE MAIL.SEND")
+
         mail.send(msg)
+
+        print("AFTER MAIL.SEND")
 
         flash("OTP sent successfully")
 
