@@ -126,11 +126,11 @@ class User(db.Model):
 
     email = db.Column(db.String(100), nullable=False)
 
-    password = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(300), nullable=False)
 
     security_question = db.Column(db.String(200),nullable=False)
 
-    security_answer = db.Column(db.String(200),nullable=False)
+    security_answer = db.Column(db.String(300),nullable=False)
 
     budget = db.Column(db.Float, default=0)
 
