@@ -691,7 +691,7 @@
                                     {% for image in image_list %}
 
                                         <img
-                                            src="{{ url_for('static', filename='uploads/' + expense.images) }}"
+                                            src="{{ url_for('static', filename='uploads/' + image) }}"
                                             class="expense-img"
                                             onclick="openImage(this.src)"
                                         >

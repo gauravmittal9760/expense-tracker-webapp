@@ -5068,11 +5068,11 @@ def account_login_records():
     )
 
     admin_login_records = (
-        LoginHistory.query
-        .filter_by(user_id=0)
-        .order_by(LoginHistory.login_time.desc())
-        .all()
-    )
+    LoginHistory.query
+    .filter(LoginHistory.user_id.is_(None))
+    .order_by(LoginHistory.login_time.desc())
+    .all()
+)
 
     return render_template(
 
@@ -5120,12 +5120,12 @@ def user_login_records(user_id):
 def delete_admin_login_record(record_id):
 
     record = (
-        LoginHistory.query
-        .filter_by(
-            id=record_id,
-            user_id=None
-        )
-        .first()
+    LoginHistory.query
+    .filter(
+        LoginHistory.id == record_id,
+        LoginHistory.user_id.is_(None)
+    )
+    .first()
     )
 
     if record:
