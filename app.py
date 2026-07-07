@@ -32,6 +32,37 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
+
+
+
+
+import smtplib
+
+print("SMTP TEST START")
+
+server = smtplib.SMTP("smtp.gmail.com", 587, timeout=10)
+
+print("CONNECTED")
+
+server.starttls()
+
+print("TLS DONE")
+
+server.login(
+    os.getenv("MAIL_USERNAME"),
+    os.getenv("MAIL_PASSWORD")
+)
+
+print("LOGIN SUCCESS")
+
+server.quit()
+
+
+
+
+
+
+
 os.environ.get("MAIL_PASSWORD")
 india_time = pytz.timezone("Asia/Kolkata")
 
@@ -49,7 +80,9 @@ app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 
 app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
 
-app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD", "fallback_if_needed")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+
+app.config["MAIL_USE_SSL"] = False
 mail = Mail(app)
 
 UPLOAD_FOLDER = "static/uploads"
@@ -721,7 +754,11 @@ Regards - Papa
 
                     try:
 
+                        print("OTP MAIL START")
+
                         mail.send(msg)
+
+                        print("OTP MAIL SENT")
 
                     except:
 
@@ -1128,121 +1165,6 @@ def recover_by_security(user_id):
         flash("Wrong Security Answer")
 
         return redirect("/forgot_password")
-
-# def send_otp(receiver_email):
-
-#     import random
-#     import smtplib
-#     import time
-
-#     from email.mime.text import MIMEText
-#     from email.mime.multipart import MIMEMultipart
-
-#     global otp_cooldown
-
-#     # ================= COOLDOWN CHECK =================
-
-#     current_time = time.time()
-
-#     if receiver_email in otp_cooldown:
-
-#         last_otp_time = otp_cooldown[
-#             receiver_email
-#         ]
-
-#         remaining_time = int(
-#             60 - (
-#                 current_time -
-#                 last_otp_time
-#             )
-#         )
-
-#         if remaining_time > 0:
-
-#             print(
-#                 f"⏳ Please wait {remaining_time} seconds before requesting another OTP"
-#             )
-
-#             return None
-
-#     # ================= GENERATE OTP =================
-
-#     otp = str(
-#         random.randint(
-#             100000,
-#             999999
-#         )
-#     )
-
-#     try:
-
-#         sender_email = EMAIL_USER
-#         sender_password = EMAIL_PASS
-
-#         message = MIMEMultipart()
-
-#         message["From"] = sender_email
-#         message["To"] = receiver_email
-#         message["Subject"] = "Your OTP Code"
-
-#         body = f"""
-#     ```
-
-#     Your OTP code is: {otp}
-
-#     This OTP is valid for 10 minutes.
-
-#     If you did not request this OTP,
-#     please ignore this email.
-
-#     """
-
-
-#         message.attach(
-#             MIMEText(
-#                 body,
-#                 "plain"
-#             )
-#         )
-
-#         server = smtplib.SMTP(
-#             "smtp.gmail.com",
-#             587
-#         )
-
-#         server.starttls()
-
-#         server.login(
-#             sender_email,
-#             sender_password
-#         )
-
-#         server.send_message(
-#             message
-#         )
-
-#         server.quit()
-
-#         # ================= SAVE OTP TIME =================
-
-#         otp_cooldown[
-#             receiver_email
-#         ] = current_time
-
-#         print(
-#             "✅ OTP sent successfully"
-#         )
-
-#         return otp
-
-#     except Exception as error:
-
-#         print(
-#             f"❌ OTP sending failed: {error}"
-#         )
-
-#         return None
-
 
 @app.route(
     "/recover_by_email",
