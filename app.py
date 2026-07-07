@@ -65,8 +65,24 @@ app.config["ADMIN_PROFILE_FOLDER"] = "static/admin_profiles"
 # app.secret_key = "expense_secret_key"
 app.secret_key = os.environ.get("SECRET_KEY", "expense_secret_key")
 print(app.url_map)
+
 # Database setup
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///expense_tracker.db"
+database_url = os.getenv("DATABASE_URL")
+
+if database_url:
+    database_url = database_url.replace(
+        "postgres://",
+        "postgresql://",
+        1
+    )
+
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    database_url
+    if database_url
+    else "sqlite:///expense_tracker.db"
+)
+
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
