@@ -36,6 +36,8 @@ os.environ.get("MAIL_PASSWORD")
 india_time = pytz.timezone("Asia/Kolkata")
 
 print("NEW APP RUNNING")
+
+print("DEPLOY TEST 123456")
 app = Flask(__name__)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 
