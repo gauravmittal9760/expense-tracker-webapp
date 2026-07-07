@@ -4,306 +4,602 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>
+    <title>
+        Account Details
+    </title>
 
-Account Login Records
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet"
->
+    <style>
 
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
->
+        body {
 
-<style>
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #111827,
+                    #1e293b
+                );
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+            min-height: 100vh;
 
-body{
+            color: white;
 
-    min-height:100vh;
+            overflow-x: hidden;
 
-    overflow-x:hidden;
+        }
 
-    color:white;
+        .main-card {
 
-    font-family:
-    "Segoe UI",
-    sans-serif;
+            background:
+                rgba(15,23,42,0.88);
 
-    background:
-    radial-gradient(circle at top left,#10213f 0%,#050816 40%,#000000 100%);
+            backdrop-filter: blur(16px);
 
-    position:relative;
-}
+            border:
+                1px solid rgba(255,255,255,0.08);
 
-.bg-grid{
+            border-radius: 28px;
 
-    position:fixed;
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.35);
 
-    inset:0;
+        }
 
-    background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        .page-title {
 
-    background-size:40px 40px;
+            font-size: 42px;
 
-    z-index:-3;
-}
+            font-weight: 700;
 
-.container-box{
+            text-align: center;
 
-    padding:45px 20px;
-}
+            background:
+                linear-gradient(
+                    90deg,
+                    #38bdf8,
+                    #818cf8,
+                    #22c55e
+                );
 
-.title{
+            -webkit-background-clip: text;
 
-    text-align:center;
+            -webkit-text-fill-color: transparent;
 
-    margin-bottom:40px;
-}
+        }
 
-.title h1{
+        .subtitle {
 
-    font-size:52px;
+            text-align: center;
 
-    font-weight:900;
+            color: rgba(255,255,255,0.70);
 
-    background:
-    linear-gradient(
-        90deg,
-        #00e5ff,
-        #00ff95
-    );
+            margin-top: 10px;
 
-    -webkit-background-clip:text;
+            margin-bottom: 35px;
 
-    -webkit-text-fill-color:transparent;
-}
+            font-size: 15px;
 
-.subtitle{
+        }
 
-    margin-top:15px;
+        .info-card {
 
-    color:#c7d7ef;
-}
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(59,130,246,0.12),
+                    rgba(139,92,246,0.10)
+                );
 
-.users-box{
+            border:
+                1px solid rgba(255,255,255,0.08);
 
-    background:
-    rgba(255,255,255,0.06);
+            border-radius: 22px;
 
-    border:
-    1px solid rgba(255,255,255,0.08);
+            padding: 25px;
 
-    border-radius:30px;
+            margin-bottom: 35px;
 
-    padding:30px;
+        }
 
-    backdrop-filter:blur(20px);
-}
+        .table {
 
-.user-card{
+            margin-bottom: 0;
 
-    display:flex;
+            overflow: hidden;
 
-    justify-content:space-between;
+            border-radius: 18px;
 
-    align-items:center;
+        }
 
-    gap:20px;
+        .table thead {
 
-    flex-wrap:wrap;
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #7c3aed
+                );
 
-    padding:24px;
+        }
 
-    margin-bottom:20px;
+        .table th {
 
-    border-radius:22px;
+            border: none !important;
 
-    background:
-    linear-gradient(
-        145deg,
-        rgba(255,255,255,0.05),
-        rgba(255,255,255,0.03)
-    );
+            padding: 16px;
 
-    border:
-    1px solid rgba(255,255,255,0.06);
+            font-size: 15px;
 
-    transition:0.3s;
-}
+            letter-spacing: 0.5px;
 
-.user-card:hover{
+        }
 
-    transform:
-    translateY(-4px);
+        .table td {
 
-    box-shadow:
-    0 0 25px rgba(0,255,231,0.12);
-}
+            padding: 16px;
 
-.user-info{
+            border-color:
+                rgba(255,255,255,0.06) !important;
 
-    flex:1;
-}
+            vertical-align: middle;
 
-.user-name{
+        }
 
-    font-size:28px;
+        .table tbody tr {
 
-    font-weight:900;
+            transition: 0.25s;
 
-    color:#00ffe0;
-}
+        }
 
-.user-email{
+        .table tbody tr:hover {
 
-    margin-top:8px;
+            background:
+                rgba(255,255,255,0.05);
 
-    color:#c7d7ef;
-}
+        }
 
-.view-btn{
+        .detail-label {
 
-    border:none;
+            font-weight: 600;
 
-    padding:14px 24px;
+            color: #cbd5e1;
 
-    border-radius:18px;
+            width: 35%;
 
-    font-weight:900;
+        }
 
-    background:
-    linear-gradient(
-        135deg,
-        #00e5ff,
-        #00ff95
-    );
+        .detail-value {
 
-    color:black;
+            font-weight: 500;
 
-    text-decoration:none;
-}
+            color: white;
 
-.view-btn:hover{
+        }
 
-    opacity:0.9;
-}
+        .balance-text {
 
-.empty-box{
+            color: #22c55e !important;
 
-    text-align:center;
+            font-size: 18px;
 
-    padding:60px 20px;
-}
+            font-weight: 700;
 
-.empty-box i{
+        }
 
-    font-size:70px;
+        .created-text {
 
-    margin-bottom:20px;
+            color: #38bdf8 !important;
 
-    color:#00e5ff;
-}
+            font-weight: 700;
 
-</style>
+        }
+
+        .section-title {
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            margin-bottom: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+        .history-card {
+
+            background:
+                rgba(255,255,255,0.03);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            padding: 24px;
+
+        }
+
+        .alert-warning {
+
+            border-radius: 16px;
+
+            background:
+                rgba(245,158,11,0.15);
+
+            color: #facc15;
+
+            border:
+                1px solid rgba(245,158,11,0.25);
+
+        }
+
+        .btn-back {
+
+            border-radius: 16px;
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+            padding: 13px;
+
+            transition: 0.3s;
+
+        }
+
+        .btn-back:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 20px rgba(239,68,68,0.30);
+
+        }
+
+        .top-glow {
+
+            position: absolute;
+
+            width: 320px;
+
+            height: 320px;
+
+            background:
+                rgba(59,130,246,0.18);
+
+            filter: blur(100px);
+
+            top: -100px;
+
+            left: -80px;
+
+            z-index: -1;
+
+        }
+
+        .bottom-glow {
+
+            position: absolute;
+
+            width: 320px;
+
+            height: 320px;
+
+            background:
+                rgba(139,92,246,0.18);
+
+            filter: blur(100px);
+
+            bottom: -100px;
+
+            right: -80px;
+
+            z-index: -1;
+
+        }
+
+        @media(max-width: 768px) {
+
+            .page-title {
+
+                font-size: 30px;
+
+            }
+
+            .section-title {
+
+                font-size: 22px;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-<div class="bg-grid"></div>
+<div class="top-glow"></div>
 
-<div class="container container-box">
+<div class="bottom-glow"></div>
 
-<div class="title">
+<div class="container py-5">
 
-<h1>
+    <div class="row justify-content-center">
 
-🔐 Account Login Records
+        <div class="col-lg-10">
 
-</h1>
+            <div class="main-card p-4 p-lg-5">
 
-<div class="subtitle">
+                <!-- TITLE -->
 
-Monitor login activity of all users
+                <div class="page-title">
 
-</div>
+                    👤 Account Details
 
-</div>
+                </div>
 
-<div class="users-box">
+                <div class="subtitle">
 
-{% if users %}
+                    Manage and view all your account information securely.
 
-{% for user in users %}
+                </div>
 
-<div class="user-card">
+                <!-- ACCOUNT INFO -->
 
-<div class="user-info">
+                <div class="info-card">
 
-<div class="user-name">
+                    <div class="table-responsive">
 
-{{ user.username }}
+                        <table class="table table-dark align-middle">
 
-</div>
+                            <tbody>
 
-<div class="user-email">
+                                <tr>
 
-{{ user.email }}
+                                    <td class="detail-label">
 
-</div>
+                                        <i class="fa-solid fa-user me-2"></i>
+                                        Username
 
-</div>
+                                    </td>
 
-<a
-href="/user_login_records/{{ user.id }}"
-class="view-btn"
->
+                                    <td class="detail-value">
 
-View Records
+                                        {{ user.username }}
 
-</a>
+                                    </td>
 
-</div>
+                                </tr>
 
-{% endfor %}
+                                <tr>
 
-{% else %}
+                                    <td class="detail-label">
 
-<div class="empty-box">
+                                        <i class="fa-solid fa-envelope me-2"></i>
+                                        Email
 
-<i class="fa-solid fa-database"></i>
+                                    </td>
 
-<h2>
+                                    <td class="detail-value">
 
-No Users Found
+                                        {{ user.email }}
 
-</h2>
+                                    </td>
 
-</div>
+                                </tr>
 
-{% endif %}
+                                <tr>
 
-</div>
+                                    <td class="detail-label">
+
+                                        <i class="fa-solid fa-shield-halved me-2"></i>
+                                        Role
+
+                                    </td>
+
+                                    <td class="detail-value">
+
+                                        User
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td class="detail-label">
+
+                                        <i class="fa-solid fa-wallet me-2"></i>
+                                        Monthly Budget
+
+                                    </td>
+
+                                    <td class="detail-value">
+
+                                        ₹{{ user.budget }}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td class="detail-label">
+
+                                        <i class="fa-solid fa-money-bill-wave me-2"></i>
+                                        Current Balance
+
+                                    </td>
+
+                                    <td class="balance-text">
+
+                                        ₹{{ current_balance }}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td class="detail-label">
+
+                                        <i class="fa-solid fa-calendar-days me-2"></i>
+                                        Account Created
+
+                                    </td>
+
+                                    <td class="created-text">
+
+                                        {% if user.created_at %}
+
+                                            {{ user.created_at.strftime('%d-%m-%Y %I:%M %p') }}
+
+                                        {% else %}
+
+                                            Not Available
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- LOGIN HISTORY -->
+
+                <div class="history-card">
+
+                    <div class="section-title">
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        Login History
+
+                    </div>
+
+                    {% if login_history %}
+
+                    <div class="table-responsive">
+
+                        <table class="table table-dark table-hover align-middle">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+
+                                        <i class="fa-solid fa-clock me-2"></i>
+                                        Login Time
+
+                                    </th>
+
+                                    <th>
+
+                                        <i class="fa-solid fa-location-dot me-2"></i>
+                                        IP Address
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for history in login_history %}
+
+                                <tr>
+
+                                    <td>
+
+                                        {{ history.login_time }}
+
+                                    </td>
+
+                                    <td>
+
+                                        {{ history.ip_address }}
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="alert alert-warning">
+
+                        <i class="fa-solid fa-circle-exclamation me-2"></i>
+
+                        No login history found
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- EXIT BUTTON -->
+
+                <div class="d-grid mt-4">
+
+                    <a
+                        href="/dashboard"
+                        class="btn btn-danger btn-back"
+                    >
+
+                        <i class="fa-solid fa-arrow-left me-2"></i>
+
+                        Exit
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
