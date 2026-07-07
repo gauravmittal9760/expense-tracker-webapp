@@ -1015,6 +1015,67 @@ body{
 
             </div>
 
+            <div
+style="
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:28px;
+"
+>
+
+<form
+method="POST"
+action="/clear_all_admin_login_records"
+onsubmit="return confirm('Delete ALL admin login records?')"
+>
+
+<button
+type="submit"
+style="
+border:none;
+padding:14px 24px;
+border-radius:18px;
+font-weight:900;
+background:linear-gradient(135deg,#ff1744,#ff5252);
+color:white;
+box-shadow:0 0 20px rgba(255,0,80,0.25);
+"
+>
+
+🗑 Clear All Admin Records
+
+</button>
+
+</form>
+
+<form
+method="POST"
+action="/clear_all_user_login_records"
+onsubmit="return confirm('Delete ALL users login records?')"
+>
+
+<button
+type="submit"
+style="
+border:none;
+padding:14px 24px;
+border-radius:18px;
+font-weight:900;
+background:linear-gradient(135deg,#ff9800,#ff5722);
+color:white;
+box-shadow:0 0 20px rgba(255,120,0,0.25);
+"
+>
+
+⚠ Clear All User Records
+
+</button>
+
+</form>
+
+</div>
+
             <div>
 
                 <h2>
@@ -1130,6 +1191,29 @@ body{
 
             </div>
 
+<div class="d-flex flex-wrap gap-3 mb-4">
+
+    <form
+    method="POST"
+    action="/clear_all_admin_login_records"
+    onsubmit="return confirm('Delete ALL admin login records?')"
+    >
+
+        <button
+        type="submit"
+        class="btn btn-danger fw-bold px-4 py-3 rounded-4"
+        >
+
+            <i class="fa-solid fa-trash"></i>
+
+            Clear All Admin Records
+
+        </button>
+
+    </form>
+
+</div>
+
             <div>
 
                 <h2>
@@ -1212,6 +1296,30 @@ body{
                 href="/user_login_records/{{ user.id }}"
                 class="view-btn"
                 >
+
+<form
+method="POST"
+action="/delete_all_user_records/{{ user.id }}"
+onsubmit="return confirm('Delete ALL login records of this user?')"
+>
+
+<button
+type="submit"
+class="view-btn"
+style="
+margin-top:14px;
+background:linear-gradient(135deg,#ff1744,#ff5252);
+color:white;
+"
+>
+
+<i class="fa-solid fa-trash"></i>
+
+Delete All Records
+
+</button>
+
+</form>
 
                     <i class="fa-solid fa-clock-rotate-left"></i>
 
