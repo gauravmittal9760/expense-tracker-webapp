@@ -32,37 +32,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
-
-
-
-
-import smtplib
-
-print("SMTP TEST START")
-
-server = smtplib.SMTP("smtp.gmail.com", 587, timeout=10)
-
-print("CONNECTED")
-
-server.starttls()
-
-print("TLS DONE")
-
-server.login(
-    os.getenv("MAIL_USERNAME"),
-    os.getenv("MAIL_PASSWORD")
-)
-
-print("LOGIN SUCCESS")
-
-server.quit()
-
-
-
-
-
-
-
 os.environ.get("MAIL_PASSWORD")
 india_time = pytz.timezone("Asia/Kolkata")
 
@@ -83,7 +52,16 @@ app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
 app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 
 app.config["MAIL_USE_SSL"] = False
+
+app.config["MAIL_MAX_EMAILS"] = 5
+app.config["MAIL_ASCII_ATTACHMENTS"] = False
+app.config["MAIL_SUPPRESS_SEND"] = False
+app.config["MAIL_DEBUG"] = True
+
 mail = Mail(app)
+print("MAIL USERNAME =", app.config["MAIL_USERNAME"])
+print("MAIL PASSWORD FOUND =", app.config["MAIL_PASSWORD"] is not None)
+print("MAIL PASSWORD LENGTH =", len(app.config["MAIL_PASSWORD"]) if app.config["MAIL_PASSWORD"] else 0)
 
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -116,6 +94,14 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 )
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+
+    "pool_pre_ping": True,
+
+    "pool_recycle": 300
+
+}
 
 db = SQLAlchemy(app)
 
