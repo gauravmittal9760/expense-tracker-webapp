@@ -4247,7 +4247,7 @@ def open_admin_panel():
             # ADMIN LOGIN HISTORY SAVE
             admin_login = LoginHistory(
 
-                user_id = 0,
+                user_id = None,
 
                 ip_address = request.remote_addr
 
@@ -5123,7 +5123,7 @@ def delete_admin_login_record(record_id):
         LoginHistory.query
         .filter_by(
             id=record_id,
-            user_id=0
+            user_id=None
         )
         .first()
     )
