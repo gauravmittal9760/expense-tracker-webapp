@@ -5288,6 +5288,13 @@ def clear_all_admin_login_records():
     return redirect("/account_login_records")
 
 
+
+print("AAAA BEFORE CREATE_ALL")
+
+with app.app_context():
+    db.create_all()
+    print("BBBB CREATE_ALL EXECUTED")
+
 with app.app_context():
     db.create_all()
 
