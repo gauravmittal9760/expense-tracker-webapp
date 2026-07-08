@@ -33,7 +33,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
-os.environ.get("MAIL_PASSWORD")
 india_time = pytz.timezone("Asia/Kolkata")
 
 print("NEW APP RUNNING")
@@ -49,7 +48,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 app.config["ADMIN_PROFILE_FOLDER"] = "static/admin_profiles"
 
-BREVO_API_KEY = os.environ.get("BREVO_API_KEY")
+BREVO_API_KEY = os.getenv("BREVO_API_KEY", "").strip()
 # app.secret_key = "expense_secret_key"
 app.secret_key = os.environ.get("SECRET_KEY", "expense_secret_key")
 print(app.url_map)
