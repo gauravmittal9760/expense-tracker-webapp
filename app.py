@@ -39,7 +39,7 @@ print("NEW APP RUNNING")
 
 print("DEPLOY TEST 123456")
 app = Flask(__name__)
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_SERVER"] = "smtp-relay.brevo.com"
 
 app.config["MAIL_PORT"] = 587
 
@@ -47,9 +47,9 @@ app.config["MAIL_USE_TLS"] = True
 
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 
-app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
 
-app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 
 app.config["MAIL_USE_SSL"] = False
 
@@ -57,6 +57,7 @@ app.config["MAIL_MAX_EMAILS"] = 5
 app.config["MAIL_ASCII_ATTACHMENTS"] = False
 app.config["MAIL_SUPPRESS_SEND"] = False
 app.config["MAIL_DEBUG"] = True
+app.config["MAIL_TIMEOUT"] = 10
 
 mail = Mail(app)
 print("MAIL_SERVER =", app.config["MAIL_SERVER"])
@@ -726,7 +727,7 @@ def home():
                         "Your Login OTP",
 
                         sender=app.config[
-                            "MAIL_USERNAME"
+                            "MAIL_DEFAULT_SENDER"
                         ],
 
                         recipients=[user.email]
@@ -1217,7 +1218,7 @@ def recover_by_email():
                     "Expense Tracker OTP",
 
                     sender=app.config[
-                        "MAIL_USERNAME"
+                        "MAIL_DEFAULT_SENDER"
                     ],
 
                     recipients=[email]
@@ -1794,7 +1795,7 @@ def forgot_password():
 
             "Expense Tracker Password Recovery OTP",
 
-            sender=app.config["MAIL_USERNAME"],
+            sender=app.config["MAIL_DEFAULT_SENDER"],
 
             recipients=[email]
 
@@ -1820,7 +1821,7 @@ Regards Papa
             print(type(e))
             print(repr(e))
             raise
-        
+
         flash("OTP sent successfully")
 
         return redirect("/verify_reset_otp")
