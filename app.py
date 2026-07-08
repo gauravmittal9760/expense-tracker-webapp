@@ -1815,7 +1815,17 @@ Regards Papa
         print("BEFORE MAIL.SEND")
 
         try:
-            mail.send(msg)
+            print("SERVER =", app.config["MAIL_SERVER"])
+            print("USERNAME =", app.config["MAIL_USERNAME"])
+            print("DEFAULT SENDER =", app.config["MAIL_DEFAULT_SENDER"])
+            print("PASSWORD LENGTH =", len(app.config["MAIL_PASSWORD"]))
+            print("BEFORE MAIL.SEND")
+            print("BEFORE CONNECT")
+
+            with mail.connect() as conn:
+                print("CONNECTED")
+
+            print("AFTER CONNECT")
             print("MAIL SENT SUCCESS")
         except Exception as e:
             print(type(e))
