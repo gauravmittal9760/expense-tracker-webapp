@@ -8,7 +8,8 @@ from functools import wraps
 import requests
 from sqlalchemy import extract
 from email.message import EmailMessage
-
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 from flask import *
 from dotenv import load_dotenv
 load_dotenv()
@@ -37,7 +38,6 @@ india_time = pytz.timezone("Asia/Kolkata")
 
 print("NEW APP RUNNING")
 
-print("DEPLOY TEST 123456")
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "static/uploads"
@@ -49,7 +49,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 app.config["ADMIN_PROFILE_FOLDER"] = "static/admin_profiles"
 
-
+BREVO_API_KEY = os.environ.get("BREVO_API_KEY")
 # app.secret_key = "expense_secret_key"
 app.secret_key = os.environ.get("SECRET_KEY", "expense_secret_key")
 print(app.url_map)
@@ -87,31 +87,46 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
 
-def send_email(to_email, subject, body):
+def send_otp_email(receiver_email, otp):
 
-    headers = {
-        "Authorization": f"Bearer {RESEND_API_KEY}",
-        "Content-Type": "application/json"
-    }
+    configuration = sib_api_v3_sdk.Configuration()
+    configuration.api_key['api-key'] = BREVO_API_KEY
 
-    data = {
-        "from": "onboarding@resend.dev",
-        "to": [to_email],
-        "subject": subject,
-        "text": body
-    }
-
-    response = requests.post(
-        "https://api.resend.com/emails",
-        headers=headers,
-        json=data,
-        timeout=20
+    api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
+        sib_api_v3_sdk.ApiClient(configuration)
     )
 
-    print(response.status_code)
-    print(response.text)
+    email = sib_api_v3_sdk.SendSmtpEmail(
+        sender={
+            "name": "Expense Tracker",
+            "email": "gauravmittal1198141@gmail.com"
+        },
+        to=[
+            {
+                "email": receiver_email
+            }
+        ],
+        subject="Your OTP for Expense Tracker",
+        html_content=f"""
+        <h2>Expense Tracker OTP Verification</h2>
 
-    response.raise_for_status()
+        <p>Your OTP is:</p>
+
+        <h1>{otp}</h1>
+
+        <p>This OTP is valid for a 10 minutes.</p>
+        <p>Do not share it with anyone.</p>
+        """
+    )
+
+    try:
+        response = api_instance.send_transac_email(email)
+        print("Brevo Success:", response)
+        return True
+
+    except ApiException as e:
+        print("Brevo Error:", e.body)
+        return False
 
 
 def allowed_file(filename):
@@ -724,19 +739,7 @@ def home():
                     )
                     
 
-                    send_email( email,
-                        "Expense Tracker Password Recovery OTP",
-                        f"""
-                    Your OTP is: {otp}
-
-                    This OTP is valid for 10 minutes.
-
-                    Do not share this OTP with anyone.
-
-                    Regards
-                    Expense Tracker Team
-                    """
-                    )
+                    send_otp_email(user.email, otp)
 
                     return redirect(
                         "/verify_login_otp"
@@ -1185,20 +1188,7 @@ def recover_by_email():
                 session["reset_email"] = email
 
                 session["otp_time"] = current_time
-                send_email(
-    email,
-    "Expense Tracker Password Recovery OTP",
-    f"""
-Your OTP is: {otp}
-
-This OTP is valid for 10 minutes.
-
-Do not share this OTP with anyone.
-
-Regards
-Expense Tracker Team
-"""
-)
+                send_otp_email(user.email, otp)
                 return render_template(
 
                     "recover_by_email.html",
@@ -1750,24 +1740,16 @@ def forgot_password():
 
         session["reset_user_id"] = user.id
 
-        send_email(
-                email,
-            "Expense Tracker Password Recovery OTP",
-            f"""
-        Your OTP is: {otp}
+        session["otp_time"] = time.time()
 
-        This OTP is valid for 10 minutes.
+        sent = send_otp_email(user.email, otp)
 
-        Do not share this OTP with anyone.
-
-        Regards
-        Expense Tracker Team
-        """
-        )
-
-        flash("OTP sent successfully")
-
-        return redirect("/verify_reset_otp")
+        if sent:
+            flash("OTP sent successfully")
+            return redirect("/verify_reset_otp")
+        else:
+            flash("Failed to send OTP. Please try again.")
+            return redirect("/forgot_password")
 
     return render_template("forgot_password.html")
 
@@ -1778,10 +1760,21 @@ def verify_reset_otp():
     if request.method == "POST":
 
         entered_otp = request.form.get("otp")
-
         real_otp = session.get("reset_otp")
 
+        if time.time() - session.get("otp_time", 0) > 600:
+
+            session.pop("reset_otp", None)
+            session.pop("otp_time", None)
+            session.pop("reset_user_id", None)
+
+            flash("OTP has expired. Please request a new OTP.")
+            return redirect("/forgot_password")
+
         if entered_otp == real_otp:
+
+            session.pop("reset_otp", None)
+            session.pop("otp_time", None)
 
             return redirect("/reset_password")
 
