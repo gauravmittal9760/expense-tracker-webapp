@@ -59,6 +59,13 @@ app.config["MAIL_SUPPRESS_SEND"] = False
 app.config["MAIL_DEBUG"] = True
 
 mail = Mail(app)
+print("MAIL_SERVER =", app.config["MAIL_SERVER"])
+print("MAIL_PORT =", app.config["MAIL_PORT"])
+print("MAIL_TLS =", app.config["MAIL_USE_TLS"])
+print("MAIL_SSL =", app.config["MAIL_USE_SSL"])
+print("MAIL_SUPPRESS_SEND =", app.config["MAIL_SUPPRESS_SEND"])
+
+print(app.config["MAIL_USERNAME"])
 print("MAIL USERNAME =", app.config["MAIL_USERNAME"])
 print("MAIL PASSWORD FOUND =", app.config["MAIL_PASSWORD"] is not None)
 print("MAIL PASSWORD LENGTH =", len(app.config["MAIL_PASSWORD"]) if app.config["MAIL_PASSWORD"] else 0)
@@ -1222,15 +1229,14 @@ def recover_by_email():
                     Regards Papa'''
                 )
 
+                print("BEFORE MAIL.SEND")
+
                 try:
-                    print("BEFORE MAIL.SEND")
-
                     mail.send(msg)
-
-                    print("AFTER MAIL.SEND")
-
+                    print("MAIL SENT SUCCESS")
                 except Exception as e:
-                    print("MAIL ERROR =", repr(e))
+                    print(type(e))
+                    print(repr(e))
                     raise
 
                 return render_template(
@@ -1805,17 +1811,16 @@ Regards Papa
 
 """
 
+        print("BEFORE MAIL.SEND")
+
         try:
-            print("BEFORE MAIL.SEND")
-
             mail.send(msg)
-
-            print("AFTER MAIL.SEND")
-
+            print("MAIL SENT SUCCESS")
         except Exception as e:
-            print("MAIL ERROR =", repr(e))
+            print(type(e))
+            print(repr(e))
             raise
-
+        
         flash("OTP sent successfully")
 
         return redirect("/verify_reset_otp")
