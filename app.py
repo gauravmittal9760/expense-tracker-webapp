@@ -1,11 +1,11 @@
 from flask import ( Flask, render_template, request, redirect, session, flash )
 from flask_sqlalchemy import SQLAlchemy
-from flask_mail import (Mail, Message )
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import pytz
 from functools import wraps
+import requests
 from sqlalchemy import extract
 from email.message import EmailMessage
 
@@ -39,37 +39,6 @@ print("NEW APP RUNNING")
 
 print("DEPLOY TEST 123456")
 app = Flask(__name__)
-app.config["MAIL_SERVER"] = "smtp-relay.brevo.com"
-
-app.config["MAIL_PORT"] = 587
-
-app.config["MAIL_USE_TLS"] = True
-
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
-
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-
-app.config["MAIL_USE_SSL"] = False
-
-app.config["MAIL_MAX_EMAILS"] = 5
-app.config["MAIL_ASCII_ATTACHMENTS"] = False
-app.config["MAIL_SUPPRESS_SEND"] = False
-app.config["MAIL_DEBUG"] = True
-app.config["MAIL_TIMEOUT"] = 10
-
-mail = Mail(app)
-print("MAIL_SERVER =", app.config["MAIL_SERVER"])
-print("MAIL_PORT =", app.config["MAIL_PORT"])
-print("MAIL_TLS =", app.config["MAIL_USE_TLS"])
-print("MAIL_SSL =", app.config["MAIL_USE_SSL"])
-print("MAIL_SUPPRESS_SEND =", app.config["MAIL_SUPPRESS_SEND"])
-
-print(app.config["MAIL_USERNAME"])
-print("MAIL USERNAME =", app.config["MAIL_USERNAME"])
-print("MAIL PASSWORD FOUND =", app.config["MAIL_PASSWORD"] is not None)
-print("MAIL PASSWORD LENGTH =", len(app.config["MAIL_PASSWORD"]) if app.config["MAIL_PASSWORD"] else 0)
 
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -114,6 +83,36 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
 db = SQLAlchemy(app)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+
+
+def send_email(to_email, subject, body):
+
+    headers = {
+        "Authorization": f"Bearer {RESEND_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "from": "onboarding@resend.dev",
+        "to": [to_email],
+        "subject": subject,
+        "text": body
+    }
+
+    response = requests.post(
+        "https://api.resend.com/emails",
+        headers=headers,
+        json=data,
+        timeout=20
+    )
+
+    print(response.status_code)
+    print(response.text)
+
+    response.raise_for_status()
+
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -576,6 +575,8 @@ def home():
             "password"
         )
 
+
+
         # ===================================
         # SUPER ADMIN LOGIN (.env)
         # ===================================
@@ -721,50 +722,21 @@ def home():
                     session["temp_user_id"] = (
                         user.id
                     )
+                    
 
-                    msg = Message(
+                    send_email( email,
+                        "Expense Tracker Password Recovery OTP",
+                        f"""
+                    Your OTP is: {otp}
 
-                        "Your Login OTP",
+                    This OTP is valid for 10 minutes.
 
-                        sender=app.config[
-                            "MAIL_DEFAULT_SENDER"
-                        ],
+                    Do not share this OTP with anyone.
 
-                        recipients=[user.email]
-
+                    Regards
+                    Expense Tracker Team
+                    """
                     )
-
-                    msg.body = f"""
-
-Your Login OTP is:
-
-{otp}
-
-This OTP will be valid for 10 minutes.
-Do not share it with anyone.
-Regards - Papa
-
-"""
-
-                    try:
-
-                        mail.send(msg)
-
-                    except:
-
-                        return """
-
-                        <h2 style='
-                            color:red;
-                            text-align:center;
-                            margin-top:50px;
-                        '>
-
-                        OTP Email Failed ❌
-
-                        </h2>
-
-                        """
 
                     return redirect(
                         "/verify_login_otp"
@@ -1213,33 +1185,20 @@ def recover_by_email():
                 session["reset_email"] = email
 
                 session["otp_time"] = current_time
-                msg = Message(
+                send_email(
+    email,
+    "Expense Tracker Password Recovery OTP",
+    f"""
+Your OTP is: {otp}
 
-                    "Expense Tracker OTP",
+This OTP is valid for 10 minutes.
 
-                    sender=app.config[
-                        "MAIL_DEFAULT_SENDER"
-                    ],
+Do not share this OTP with anyone.
 
-                    recipients=[email]
-                )
-
-                msg.body = (
-                    f'''Your OTP is: {otp}.
-                    Do not share it with anyone.
-                    Regards Papa'''
-                )
-
-                print("BEFORE MAIL.SEND")
-
-                try:
-                    mail.send(msg)
-                    print("MAIL SENT SUCCESS")
-                except Exception as e:
-                    print(type(e))
-                    print(repr(e))
-                    raise
-
+Regards
+Expense Tracker Team
+"""
+)
                 return render_template(
 
                     "recover_by_email.html",
@@ -1791,46 +1750,20 @@ def forgot_password():
 
         session["reset_user_id"] = user.id
 
-        msg = Message(
-
+        send_email(
+                email,
             "Expense Tracker Password Recovery OTP",
+            f"""
+        Your OTP is: {otp}
 
-            sender=app.config["MAIL_DEFAULT_SENDER"],
+        This OTP is valid for 10 minutes.
 
-            recipients=[email]
+        Do not share this OTP with anyone.
 
+        Regards
+        Expense Tracker Team
+        """
         )
-
-        msg.body = f"""
-
-Your OTP is: {otp}
-
-This OTP is valid for 10 minutes.
-Do not share this OTP with anyone.
-
-Regards Papa
-
-"""
-
-        print("BEFORE MAIL.SEND")
-
-        try:
-            print("SERVER =", app.config["MAIL_SERVER"])
-            print("USERNAME =", app.config["MAIL_USERNAME"])
-            print("DEFAULT SENDER =", app.config["MAIL_DEFAULT_SENDER"])
-            print("PASSWORD LENGTH =", len(app.config["MAIL_PASSWORD"]))
-            print("BEFORE MAIL.SEND")
-            print("BEFORE CONNECT")
-
-            with mail.connect() as conn:
-                print("CONNECTED")
-
-            print("AFTER CONNECT")
-            print("MAIL SENT SUCCESS")
-        except Exception as e:
-            print(type(e))
-            print(repr(e))
-            raise
 
         flash("OTP sent successfully")
 
