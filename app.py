@@ -751,24 +751,6 @@ def home():
                 # NORMAL LOGIN SUCCESS
                 # =========================
 
-                history = LoginHistory(
-                    user_id=user.id,
-                    ip_address=request.remote_addr,
-
-                    login_time=ist_now()
-                )
-
-                print("Before Save:", history.login_time)
-
-                db.session.add(history)
-                db.session.commit()
-
-                db.session.refresh(history)
-
-                print("After Save :", history.login_time)
-
-                print("After Commit:", history.login_time)
-
                 session["user_id"] = (
                     user.id
                 )
@@ -779,18 +761,26 @@ def home():
                 print("UTC :", datetime.utcnow())
 
                 print("INDIA :", ist_now())
+
                 history = LoginHistory(
-
                     user_id=user.id,
-
-                    ip_address=request.remote_addr
-
+                    ip_address=request.remote_addr,
+                    login_time=ist_now()
                 )
+
+                print("Before Add :", history.login_time)
 
                 db.session.add(history)
 
+                print("After Add :", history.login_time)
+
                 db.session.commit()
 
+                print("After Commit :", history.login_time)
+
+                db.session.refresh(history)
+
+                print("After Refresh :", history.login_time)
                 return redirect(
                     "/dashboard"
                 )
