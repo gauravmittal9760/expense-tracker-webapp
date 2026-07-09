@@ -1191,29 +1191,6 @@ box-shadow:0 0 20px rgba(255,120,0,0.25);
 
             </div>
 
-<div class="d-flex flex-wrap gap-3 mb-4">
-
-    <form
-    method="POST"
-    action="/clear_all_admin_login_records"
-    onsubmit="return confirm('Delete ALL admin login records?')"
-    >
-
-        <button
-        type="submit"
-        class="btn btn-danger fw-bold px-4 py-3 rounded-4"
-        >
-
-            <i class="fa-solid fa-trash"></i>
-
-            Clear All Admin Records
-
-        </button>
-
-    </form>
-
-</div>
-
             <div>
 
                 <h2>
@@ -1292,10 +1269,7 @@ box-shadow:0 0 20px rgba(255,120,0,0.25);
 
                 </div>
 
-                <a
-                href="/user_login_records/{{ user.id }}"
-                class="view-btn"
-                >
+                
 
 <form
 method="POST"
@@ -1320,7 +1294,10 @@ Delete All Records
 </button>
 
 </form>
-
+<a
+                href="/user_login_records/{{ user.id }}"
+                class="view-btn"
+                >
                     <i class="fa-solid fa-clock-rotate-left"></i>
 
                     View Login Records

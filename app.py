@@ -127,6 +127,9 @@ def send_otp_email(receiver_email, otp):
         print("Brevo Error:", e.body)
         return False
 
+def ist_now():
+    return datetime.now(pytz.utc).astimezone(india_time)
+
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -176,7 +179,7 @@ class User(db.Model):
 
     income = db.Column(db.Float, default=0)
 
-    created_at = db.Column(db.DateTime,default=datetime.now(india_time))
+    created_at = db.Column(db.DateTime,default=ist_now)
 
     two_step_enabled = db.Column(db.Boolean,default=False)
 
@@ -258,7 +261,7 @@ class LoginHistory(db.Model):
 
     login_time = db.Column(
         db.DateTime,
-        default=lambda: datetime.now(india_time)
+        default=ist_now
     )
 
     ip_address = db.Column(
@@ -287,7 +290,7 @@ class UserActivityLog(db.Model):
 
     action_time = db.Column(
         db.DateTime,
-        default=lambda: datetime.now(india_time)
+        default=ist_now
     )
 
     extra_info = db.Column(
@@ -649,7 +652,7 @@ def home():
 
                     )
 
-                    if datetime.now(india_time) >= unlock_time:
+                    if ist_now() >= unlock_time:
 
                         user.account_locked = False
 
@@ -665,7 +668,7 @@ def home():
 
                             unlock_time -
 
-                            datetime.now(india_time)
+                            ist_now()
 
                         )
 
@@ -800,9 +803,7 @@ def home():
 
                     user.account_locked = True
 
-                    user.lock_time = (
-                        datetime.now(india_time)
-                    )
+                    user.lock_time =ist_now()
 
                     db.session.commit()
 
@@ -2358,8 +2359,8 @@ def monthly_report():
         user_id=user_id
     ).all()
 
-    current_year = datetime.now(india_time).year
-    current_month = datetime.now(india_time).month
+    current_year = ist_now().year
+    current_month = ist_now().month
 
     monthly_expenses = []
 
@@ -3065,7 +3066,7 @@ def advanced_export_pdf():
     "include_charts"
     )
 
-    current_month = datetime.now(india_time).strftime(
+    current_month = ist_now().strftime(
         "%Y-%m"
     )
 
@@ -3523,7 +3524,7 @@ def advanced_export_pdf():
     pdf.cell(
         190,
         10,
-        f"Generated On : {datetime.now(india_time)}",
+        f"Generated On : {ist_now()}",
         ln=True,
         align="C"
     )
