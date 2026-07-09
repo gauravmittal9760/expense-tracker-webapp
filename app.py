@@ -2,7 +2,7 @@ from flask import ( Flask, render_template, request, redirect, session, flash )
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta ,UTC
 import pytz
 from functools import wraps
 import requests
@@ -758,7 +758,9 @@ def home():
                 session["username"] = (
                     user.username
                 )
+                print("UTC :", datetime.utcnow())
 
+                print("INDIA :", ist_now())
                 history = LoginHistory(
 
                     user_id=user.id,
