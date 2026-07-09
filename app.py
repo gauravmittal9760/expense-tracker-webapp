@@ -6,7 +6,7 @@ from datetime import datetime, timedelta ,UTC
 import pytz
 from functools import wraps
 import requests
-from sqlalchemy import extract
+from sqlalchemy import extract , DateTime
 from email.message import EmailMessage
 import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
@@ -179,7 +179,7 @@ class User(db.Model):
 
     income = db.Column(db.Float, default=0)
 
-    created_at = db.Column(db.DateTime,default=ist_now)
+    created_at = db.Column(DateTime(timezone=True),default=ist_now)
 
     two_step_enabled = db.Column(db.Boolean,default=False)
 
@@ -191,7 +191,7 @@ class User(db.Model):
 
     account_locked = db.Column(db.Boolean,default=False)
 
-    lock_time = db.Column(db.DateTime,nullable=True)
+    lock_time = db.Column(DateTime(timezone=True),nullable=True)
 
     is_locked = db.Column(db.Boolean,default=False)
 
@@ -260,7 +260,7 @@ class LoginHistory(db.Model):
     )
 
     login_time = db.Column(
-        db.DateTime,
+        DateTime(timezone=True),
         default=ist_now
     )
 
@@ -289,7 +289,7 @@ class UserActivityLog(db.Model):
     )
 
     action_time = db.Column(
-        db.DateTime,
+        DateTime(timezone=True),
         default=ist_now
     )
 
