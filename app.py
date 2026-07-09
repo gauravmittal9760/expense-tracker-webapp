@@ -753,13 +753,19 @@ def home():
 
                 history = LoginHistory(
                     user_id=user.id,
-                    ip_address=request.remote_addr
+                    ip_address=request.remote_addr,
+
+                    login_time=ist_now()
                 )
 
-                print("Saved Time:", history.login_time)
+                print("Before Save:", history.login_time)
 
                 db.session.add(history)
                 db.session.commit()
+
+                db.session.refresh(history)
+
+                print("After Save :", history.login_time)
 
                 print("After Commit:", history.login_time)
 
@@ -4983,6 +4989,10 @@ def user_login_records(user_id):
         .all()
     )
 
+    for record in login_records:
+        print(record.login_time)
+        print(record.login_time.tzinfo)
+
     return render_template(
 
         "user_login_records.html",
@@ -5182,6 +5192,24 @@ def clear_all_admin_login_records():
     db.session.commit()
 
     return redirect("/account_login_records")
+
+from sqlalchemy import text
+
+@app.route("/check_db_columns")
+def check_db_columns():
+
+    result = db.session.execute(text("""
+        SELECT
+            column_name,
+            data_type
+        FROM information_schema.columns
+        WHERE table_name = 'login_history'
+    """))
+
+    return "<br>".join(
+        f"{row.column_name} : {row.data_type}"
+        for row in result
+    )
 
 
 
