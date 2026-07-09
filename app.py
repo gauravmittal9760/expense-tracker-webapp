@@ -751,6 +751,18 @@ def home():
                 # NORMAL LOGIN SUCCESS
                 # =========================
 
+                history = LoginHistory(
+                    user_id=user.id,
+                    ip_address=request.remote_addr
+                )
+
+                print("Saved Time:", history.login_time)
+
+                db.session.add(history)
+                db.session.commit()
+
+                print("After Commit:", history.login_time)
+
                 session["user_id"] = (
                     user.id
                 )
